@@ -31,13 +31,14 @@ public class Fragment1 extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private static final String[] NAME={"0","0","0","0","0","0","0","0","0","0"};
+    private static final String[] NAME ={"0","0","0","0","0","0","0","0","0","0"};
     private static final String[] PHONE = {"0","0","0","0","0","0","0","0","0","0"};
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
 
+    //json 파일을 스트링으로 읽어오기
     private String getJasonString(){
         String json ="";
 
@@ -60,6 +61,7 @@ public class Fragment1 extends Fragment {
     }
 
 
+    //json 파싱하기
     void doJSONParser() {
         // json 데이터
         StringBuffer sb = new StringBuffer();
@@ -68,7 +70,8 @@ public class Fragment1 extends Fragment {
 
         try {
             JSONArray jarray = new JSONArray(str);
-            for (int i=0;i<jarray.length();i++){
+            int len = jarray.length();
+            for (int i=0;i<len;i++){
                 JSONObject jObject = jarray.getJSONObject(i);
                 String name = jObject.getString("name");
                 String phone = jObject.getString("phone");
@@ -115,6 +118,14 @@ public class Fragment1 extends Fragment {
         doJSONParser();
     }
 
+    public int findNum(String text){
+        for (int i=0; i<10;i++){
+            if (text == NAME[i]){
+                return i;
+            };
+        };
+        return 0;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -127,11 +138,24 @@ public class Fragment1 extends Fragment {
         ListView listview = (ListView) view.findViewById(R.id.listview1);
         listview.setAdapter(adapter);
 
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String strText = (String) parent.getItemAtPosition(position);
+
+                int index = findNum(strText);
+
+
+                NAME[index] = PHONE[index];
+
+                System.out.println(NAME[index]);
+                listview.setAdapter(adapter);
+
+            };
+        });
+
         return view;
     }
-
-
-
 
 
 }
