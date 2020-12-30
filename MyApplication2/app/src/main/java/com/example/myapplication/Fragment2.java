@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,12 +54,97 @@ public class Fragment2 extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_2, container, false);
+        View view = inflater.inflate(R.layout.fragment_2, container, false);
+
+        //View Click -> Big Image 불러옴
+        final View thumb1View = view.findViewById(R.id.thumb_button_1);
+        thumb1View.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                zoomImageFromThumb(thumb1View, R.drawable.a1);
+            }
+        });
+
+        final View thumb2View = view.findViewById(R.id.thumb_button_2);
+        thumb2View.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                zoomImageFromThumb(thumb2View, R.drawable.a2);
+            }
+        });
+
+        final View thumb3View = view.findViewById(R.id.thumb_button_3);
+        thumb3View.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                zoomImageFromThumb(thumb3View, R.drawable.a3);
+            }
+        });
+
+        final View thumb4View = view.findViewById(R.id.thumb_button_4);
+        thumb4View.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                zoomImageFromThumb(thumb4View, R.drawable.a4);
+            }
+        });
+
+        final View thumb5View = view.findViewById(R.id.thumb_button_5);
+        thumb5View.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                zoomImageFromThumb(thumb5View, R.drawable.a5);
+            }
+        });
+
+        final View thumb6View = view.findViewById(R.id.thumb_button_6);
+        thumb6View.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                zoomImageFromThumb(thumb6View, R.drawable.a6);
+            }
+        });
+
+        final View thumb7View = view.findViewById(R.id.thumb_button_7);
+        thumb7View.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                zoomImageFromThumb(thumb7View, R.drawable.a7);
+            }
+        });
+
+        final View thumb8View = view.findViewById(R.id.thumb_button_8);
+        thumb8View.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                zoomImageFromThumb(thumb8View, R.drawable.a8);
+            }
+        });
+
+        final View thumb9View = view.findViewById(R.id.thumb_button_9);
+        thumb9View.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                zoomImageFromThumb(thumb9View, R.drawable.a9);
+            }
+        });
+
+        return view;
     }
+
+    private void zoomImageFromThumb(final View thumbView, int imageResId) {
+        final ImageView expandedImageView = (ImageView) getView().findViewById(R.id.expanded_image);
+        expandedImageView.setImageResource(imageResId);
+
+        expandedImageView.setVisibility(View.VISIBLE);
+    }
+
+
 }
