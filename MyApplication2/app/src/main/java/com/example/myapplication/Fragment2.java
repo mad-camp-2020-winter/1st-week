@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,7 +9,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +30,8 @@ public class Fragment2 extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    MainActivity activity;
 
     public Fragment2() {
         // Required empty public constructor
@@ -63,88 +71,81 @@ public class Fragment2 extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_2, container, false);
 
-        //View Click -> Big Image 불러옴
-        final View thumb1View = view.findViewById(R.id.thumb_button_1);
-        thumb1View.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                zoomImageFromThumb(thumb1View, R.drawable.a1);
-            }
-        });
+        //갤러리 gridView 선언
+        GridView gridView = (GridView) view.findViewById(R.id.gridView1);
+        gridView.setAdapter(new Fragment2.ImageAdapter(this.getContext()));
 
-        final View thumb2View = view.findViewById(R.id.thumb_button_2);
-        thumb2View.setOnClickListener(new View.OnClickListener() {
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View view) {
-                zoomImageFromThumb(thumb2View, R.drawable.a2);
-            }
-        });
-
-        final View thumb3View = view.findViewById(R.id.thumb_button_3);
-        thumb3View.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                zoomImageFromThumb(thumb3View, R.drawable.a3);
-            }
-        });
-
-        final View thumb4View = view.findViewById(R.id.thumb_button_4);
-        thumb4View.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                zoomImageFromThumb(thumb4View, R.drawable.a4);
-            }
-        });
-
-        final View thumb5View = view.findViewById(R.id.thumb_button_5);
-        thumb5View.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                zoomImageFromThumb(thumb5View, R.drawable.a5);
-            }
-        });
-
-        final View thumb6View = view.findViewById(R.id.thumb_button_6);
-        thumb6View.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                zoomImageFromThumb(thumb6View, R.drawable.a6);
-            }
-        });
-
-        final View thumb7View = view.findViewById(R.id.thumb_button_7);
-        thumb7View.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                zoomImageFromThumb(thumb7View, R.drawable.a7);
-            }
-        });
-
-        final View thumb8View = view.findViewById(R.id.thumb_button_8);
-        thumb8View.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                zoomImageFromThumb(thumb8View, R.drawable.a8);
-            }
-        });
-
-        final View thumb9View = view.findViewById(R.id.thumb_button_9);
-        thumb9View.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                zoomImageFromThumb(thumb9View, R.drawable.a9);
+            public void onItemClick(AdapterView<?> parent, View v,
+                                    int position, long id) {
+                activity.onFragmentChange(1);
+//                activity.addFragment2Detail();
+//                // Sending image id to FullScreenActivity
+//                Intent i = new Intent(getApplicationContext(), GalleryActivity.class);
+//                // passing array index
+//                i.putExtra("id", position);
+//                startActivity(i);
             }
         });
 
         return view;
     }
 
-    private void zoomImageFromThumb(final View thumbView, int imageResId) {
-        final ImageView expandedImageView = (ImageView) getView().findViewById(R.id.expanded_image);
-        expandedImageView.setImageResource(imageResId);
-
-        expandedImageView.setVisibility(View.VISIBLE);
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        activity = (MainActivity)getActivity();
     }
 
+    @Override
+    public void onDetach(){
+        super.onDetach();
+        activity = null;
+    }
+
+
+    //gridView 사용 위한 ImageAdapter
+    public class ImageAdapter extends BaseAdapter {
+        private Context context;
+
+        private Integer[] images = {R.drawable.a1, R.drawable.a2, R.drawable.a3, R.drawable.a4, R.drawable.a5, R.drawable.a6, R.drawable.a7, R.drawable.a8, R.drawable.a9};
+
+        public ImageAdapter(Context con){
+            this.context = con;
+        }
+
+        @Override
+        public int getCount() {
+            return images.length;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ImageView imageView;
+
+            if(convertView==null) {
+                imageView = new ImageView(context);
+                imageView.setLayoutParams(new ViewGroup.LayoutParams(350,300));
+                imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                imageView.setPadding(5,5,5,5);
+            }
+            else {
+                imageView = (ImageView) convertView;
+            }
+            imageView.setImageResource(images[position]);
+            return imageView;
+        }
+    }
 
 }

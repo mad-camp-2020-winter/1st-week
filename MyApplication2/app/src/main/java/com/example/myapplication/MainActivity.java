@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
@@ -34,6 +35,18 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tab=findViewById(R.id.tab);
         tab.setupWithViewPager(vp);
 
+    }
+
+    Fragment2 fragment2 = new Fragment2();
+    Fragment2Detail fragment2Detail = new Fragment2Detail();
+
+    public void onFragmentChange(int index) {
+        if(index == 0) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment2).commit();
+        }
+        else if (index ==1) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment2Detail).commit();
+        }
     }
 
 
