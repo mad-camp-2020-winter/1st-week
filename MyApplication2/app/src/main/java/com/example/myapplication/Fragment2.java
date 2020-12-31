@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -109,7 +110,7 @@ public class Fragment2 extends Fragment {
     public class ImageAdapter extends BaseAdapter {
         private Context context;
 
-        private Integer[] images = {R.drawable.a1, R.drawable.a2, R.drawable.a3, R.drawable.a4, R.drawable.a5, R.drawable.a6, R.drawable.a7, R.drawable.a8, R.drawable.a9};
+        private Integer[] images = {R.drawable.a1, R.drawable.a2, R.drawable.a3, R.drawable.a4, R.drawable.a5, R.drawable.a6, R.drawable.a7, R.drawable.a8, R.drawable.a9, R.drawable.a10, R.drawable.a11, R.drawable.a12, R.drawable.a13, R.drawable.a14, R.drawable.a15, R.drawable.a16, R.drawable.a17, R.drawable.a18, R.drawable.a19, R.drawable.a20, R.drawable.a21};
 
         public ImageAdapter(Context con){
             this.context = con;
@@ -134,9 +135,16 @@ public class Fragment2 extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent) {
             ImageView imageView;
 
+            Point winSize = new Point();
+            getActivity().getWindowManager().getDefaultDisplay().getSize(winSize);
+            int width = winSize.x;
+            int height = winSize.y;
+            width = width / 3 - 10;
+            height = height / 5 - 20;
+
             if(convertView==null) {
                 imageView = new ImageView(context);
-                imageView.setLayoutParams(new ViewGroup.LayoutParams(350,300));
+                imageView.setLayoutParams(new ViewGroup.LayoutParams(width,height));
                 imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 imageView.setPadding(5,5,5,5);
             }
