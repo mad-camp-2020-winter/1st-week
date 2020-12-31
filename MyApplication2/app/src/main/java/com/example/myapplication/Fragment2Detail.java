@@ -25,8 +25,13 @@ public class Fragment2Detail extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public Fragment2Detail() {
-        // Required empty public constructor
+    //추가 변수
+    private int index;
+    private Integer[] images = {R.drawable.a1, R.drawable.a2, R.drawable.a3, R.drawable.a4, R.drawable.a5, R.drawable.a6, R.drawable.a7, R.drawable.a8, R.drawable.a9};
+    private Integer[] thumbButton = {R.id.thumb_button_1, R.id.thumb_button_2, R.id.thumb_button_3, R.id.thumb_button_4, R.id.thumb_button_5, R.id.thumb_button_6, R.id.thumb_button_7, R.id.thumb_button_8, R.id.thumb_button_9};
+
+    public Fragment2Detail(int index) {
+        this.index = index;
     }
 
     /**
