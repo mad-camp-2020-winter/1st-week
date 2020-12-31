@@ -46,20 +46,54 @@ public class Fragment2Activity extends Activity implements View.OnClickListener 
         //clickListener 설정
         for (int i = 0; i <= IMAGEMAX - 1; i++) {
             thumbView[i] = findViewById(thumbButton[i]);
-            thumbView[i].setOnClickListener(this);
+            thumbView[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int index;
+                    for (index = 0; index < IMAGEMAX - 1; index++) {
+                        if (v.getId() == thumbButton[index]) { break;}
+                    }
+                    zoomImageFromThumb(images[index]);
+                }
+            });
         }
-//        View thumbView = findViewById(R.id.thumb_button_1);
-//        thumbView.setOnClickListener(this);
 
+        switchHeartListener();
+    }
+
+    public void switchHeartListener() {
+        View heartView = findViewById(R.id.heart);
+        View heartBlankView = findViewById(R.id.heart_blank);
+        heartView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                switchHeart();
+            }
+        });
+        heartBlankView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                switchHeart();
+            }
+        });
+    }
+
+    public void switchHeart(){
+        final ImageView heartView = (ImageView) findViewById(R.id.heart);
+        final ImageView heartBlankView = (ImageView) findViewById(R.id.heart_blank);
+        if (heartView.getVisibility() == View.VISIBLE) {
+            heartView.setVisibility(View.INVISIBLE);
+            heartBlankView.setVisibility(View.VISIBLE);
+        }
+        else if (heartView.getVisibility() == View.INVISIBLE) {
+            heartView.setVisibility(View.VISIBLE);
+            heartBlankView.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
     public void onClick(View v) {
-        int index;
-        for (index = 0; index < IMAGEMAX - 1; index++) {
-            if (v.getId() == thumbButton[index]) { break;}
-        }
-        zoomImageFromThumb(images[index]);
+
     }
 
     private void zoomImageFromThumb(int imageResId) {
