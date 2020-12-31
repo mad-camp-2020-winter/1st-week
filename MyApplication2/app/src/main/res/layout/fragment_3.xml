@@ -6,12 +6,15 @@
     tools:context=".Fragment3">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="154dp"
-        android:layout_height="77dp"
-        android:autoSizeTextType="uniform"
-        android:background="#FFFFFF"
-        android:text="page3"
-        android:textColor="#ffff0000" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="center_horizontal"
+        android:textStyle="bold"
+        android:id ="@+id/button1"
+        android:layout_weight = '1'
+        android:text = "Font Size Change"
+        android:onClick="btnClick"
+        />
+
 </FrameLayout>

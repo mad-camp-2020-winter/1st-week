@@ -19,6 +19,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -51,7 +52,6 @@ public class Fragment1 extends Fragment {
     private String mParam1;
     private String mParam2;
     private int len;
-    private final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1000;
 
 
     //json 파일을 스트링으로 읽어오기
@@ -147,21 +147,6 @@ public class Fragment1 extends Fragment {
     }
 
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permission[], int[] grantResults){
-        switch (requestCode){
-            case MY_PERMISSIONS_REQUEST_CALL_PHONE:
-            {
-                if (grantResults.length >0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    Toast.makeText(getActivity(),"승인이 허가되어 있습니다", Toast.LENGTH_LONG).show();
-                }
-                else{
-                    Toast.makeText(getActivity(),"아직 승인받지 않았습니다.", Toast.LENGTH_LONG).show();
-                }
-                return;
-            }
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -169,6 +154,7 @@ public class Fragment1 extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_1, null);
         ListViewAdapter adapter;
+
 
 
         doJSONParser();
@@ -190,6 +176,16 @@ public class Fragment1 extends Fragment {
         for (int i=0; i< len; i++){
             adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.human),FINAL_LIST[i]);
         }
+
+        //+ add address 구현하기
+        Button button1 = view.findViewById(R.id.button_frag1);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getActivity(),SubActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -232,26 +228,30 @@ public class Fragment1 extends Fragment {
                     }
                 }
                 else{
+                    //titleStr
 
-                    int permissionCheck = ContextCompat.checkSelfPermission(getActivity(),Manifest.permission.CALL_PHONE);
-
-                    if (permissionCheck != PackageManager.PERMISSION_GRANTED){
-                        Toast.makeText(getActivity(),"권한 승인이 필요합니다.",Toast.LENGTH_LONG).show();
-
-                        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),Manifest.permission.CALL_PHONE)){
-                            Toast.makeText(getActivity(),"전화 권한 필요함", Toast.LENGTH_LONG).show();
-                        }
-
+                    if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE, Manifest.permission.SEND_SMS, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
                     }
 
-                    String tel = "tel:" + titleStr;
-                    startActivity(new Intent("android.intent.action.CALL", Uri.parse(tel)));
-                    //startActivity(new Intent("android.intent.action.DIAL", Uri.parse(tel)));
+                    String call_num = "tel:"+ titleStr;
+                    Intent intent = new Intent(Intent.ACTION_CALL);
+                    intent.setData(Uri.parse(call_num));
 
+                    try{
+                        getContext().startActivity(intent);
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                    adapter = new ListViewAdapter() ;
+                    listview.setAdapter(adapter);
+
+                    FINAL_LIST = original;
                 }
             }
-        }) ;
-
+        });
         return view;
     }
 
