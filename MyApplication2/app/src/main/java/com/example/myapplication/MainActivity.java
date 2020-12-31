@@ -37,19 +37,21 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private Integer[] images = {R.drawable.a1, R.drawable.a2, R.drawable.a3, R.drawable.a4, R.drawable.a5, R.drawable.a6, R.drawable.a7, R.drawable.a8, R.drawable.a9};
+    //fragment간 transaction 필요 없어져서 주석처리
+//    private Integer[] images = {R.drawable.a1, R.drawable.a2, R.drawable.a3, R.drawable.a4, R.drawable.a5, R.drawable.a6, R.drawable.a7, R.drawable.a8, R.drawable.a9};
 
-    public void onFragmentChange(int index) {
-        Fragment2Detail fragment2Detail = new Fragment2Detail(index);
-//        fragment2Detail.zoomImageFromThumb(R.drawable.a1);
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment2Detail).commit();
+//    public void onFragmentChange(int index) {
+//        Fragment2Detail fragment2Detail = new Fragment2Detail(index);
+//        Fragment2 fragment2 = new Fragment2();
+////        fragment2Detail.zoomImageFromThumb(R.drawable.a1);
+////        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment2Detail).commit();
 //        if(index == 0) {
-//            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment2).commit();
+//            getSupportFragmentManager().beginTransaction().replace(R.id.container_detail, fragment2).commit();
 //        }
 //        else if (index ==1) {
 //            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment2Detail).commit();
 //        }
-    }
+//    }
 
 
 

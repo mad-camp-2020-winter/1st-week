@@ -79,13 +79,13 @@ public class Fragment2 extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                activity.onFragmentChange(1);
+//                activity.onFragmentChange(1);
 //                activity.addFragment2Detail();
-//                // Sending image id to FullScreenActivity
-//                Intent i = new Intent(getApplicationContext(), GalleryActivity.class);
-//                // passing array index
-//                i.putExtra("id", position);
-//                startActivity(i);
+                // Sending image id to FullScreenActivity
+                Intent i = new Intent(getActivity(), Fragment2Activity.class);
+                // passing array index
+                i.putExtra("id", position);
+                startActivity(i);
             }
         });
 
@@ -122,7 +122,7 @@ public class Fragment2 extends Fragment {
 
         @Override
         public Object getItem(int position) {
-            return null;
+            return images[position];
         }
 
         @Override
