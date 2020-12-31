@@ -1,7 +1,8 @@
 package com.example.myapplication;
 
+import android.view.View;
+
 import androidx.annotation.Nullable;
-import androidx.collection.ArraySet;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -26,6 +27,7 @@ public class VPAdapter extends FragmentPagerAdapter {
         itext.add("Free");
     }
 
+
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
@@ -34,6 +36,7 @@ public class VPAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+
         return items.get(position);
     }
 

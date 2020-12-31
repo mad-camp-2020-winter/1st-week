@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.TabActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
 
@@ -16,7 +19,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-
+    private TextView textView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,8 +37,9 @@ public class MainActivity extends AppCompatActivity {
         //tab과 viewpager 연동시키는 과정
         TabLayout tab=findViewById(R.id.tab);
         tab.setupWithViewPager(vp);
-
     }
+
+
 
     Fragment2 fragment2 = new Fragment2();
     Fragment2Detail fragment2Detail = new Fragment2Detail();
@@ -48,8 +52,5 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment2Detail).commit();
         }
     }
-
-
-
 
 }
