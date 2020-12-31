@@ -25,13 +25,8 @@ public class Fragment2Detail extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    //추가 변수
-    private int index;
-    private Integer[] images = {R.drawable.a1, R.drawable.a2, R.drawable.a3, R.drawable.a4, R.drawable.a5, R.drawable.a6, R.drawable.a7, R.drawable.a8, R.drawable.a9};
-    private Integer[] thumbButton = {R.id.thumb_button_1, R.id.thumb_button_2, R.id.thumb_button_3, R.id.thumb_button_4, R.id.thumb_button_5, R.id.thumb_button_6, R.id.thumb_button_7, R.id.thumb_button_8, R.id.thumb_button_9};
-
-    public Fragment2Detail(int index) {
-        this.index = index;
+    public Fragment2Detail() {
+        // Required empty public constructor
     }
 
     /**
@@ -60,7 +55,6 @@ public class Fragment2Detail extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-//        zoomImageFromThumb(R.drawable.a1);
     }
 
     @Override
@@ -69,13 +63,12 @@ public class Fragment2Detail extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_2_detail, container, false);
 
-
         //View Click -> Big Image 불러옴
         final View thumb1View = view.findViewById(R.id.thumb_button_1);
         thumb1View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                zoomImageFromThumb(R.drawable.a1);
+                zoomImageFromThumb(thumb1View, R.drawable.a1);
             }
         });
 
@@ -83,7 +76,7 @@ public class Fragment2Detail extends Fragment {
         thumb2View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                zoomImageFromThumb(R.drawable.a2);
+                zoomImageFromThumb(thumb2View, R.drawable.a2);
             }
         });
 
@@ -91,7 +84,7 @@ public class Fragment2Detail extends Fragment {
         thumb3View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                zoomImageFromThumb(R.drawable.a3);
+                zoomImageFromThumb(thumb3View, R.drawable.a3);
             }
         });
 
@@ -99,7 +92,7 @@ public class Fragment2Detail extends Fragment {
         thumb4View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                zoomImageFromThumb(R.drawable.a4);
+                zoomImageFromThumb(thumb4View, R.drawable.a4);
             }
         });
 
@@ -107,7 +100,7 @@ public class Fragment2Detail extends Fragment {
         thumb5View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                zoomImageFromThumb(R.drawable.a5);
+                zoomImageFromThumb(thumb5View, R.drawable.a5);
             }
         });
 
@@ -115,7 +108,7 @@ public class Fragment2Detail extends Fragment {
         thumb6View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                zoomImageFromThumb(R.drawable.a6);
+                zoomImageFromThumb(thumb6View, R.drawable.a6);
             }
         });
 
@@ -123,7 +116,7 @@ public class Fragment2Detail extends Fragment {
         thumb7View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                zoomImageFromThumb(R.drawable.a7);
+                zoomImageFromThumb(thumb7View, R.drawable.a7);
             }
         });
 
@@ -131,7 +124,7 @@ public class Fragment2Detail extends Fragment {
         thumb8View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                zoomImageFromThumb(R.drawable.a8);
+                zoomImageFromThumb(thumb8View, R.drawable.a8);
             }
         });
 
@@ -139,16 +132,14 @@ public class Fragment2Detail extends Fragment {
         thumb9View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                zoomImageFromThumb(R.drawable.a9);
+                zoomImageFromThumb(thumb9View, R.drawable.a9);
             }
         });
 
-        //Fragment2(이전 프래그먼트)에서 누른 이미지 확장
-//        final View thumbPickedView = view.findViewById(R.id.thumb_button_1);
         return view;
     }
 
-    public void zoomImageFromThumb(int imageResId) {
+    private void zoomImageFromThumb(final View thumbView, int imageResId) {
         final ImageView expandedImageView = (ImageView) getView().findViewById(R.id.expanded_image);
         expandedImageView.setImageResource(imageResId);
 
