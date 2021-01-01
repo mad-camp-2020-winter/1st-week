@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/container_detail"
+    android:background="@color/white"
+    tools:context=".Fragment2">
+
+
+    <ImageButton
+        android:id="@+id/heart_blank"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginRight="1dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/heart_blank"
+        android:layout_marginEnd="1dp"
+        android:background="#00000000"
+        android:paddingRight="20dp"
+        android:paddingTop="20dp"
+        android:layout_gravity="end"/>
+
+    <ImageButton
+        android:id="@+id/heart"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginRight="1dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/heart"
+        android:layout_marginEnd="1dp"
+        android:background="#00000000"
+        android:layout_gravity="end"
+        android:paddingRight="20dp"
+        android:paddingTop="20dp"
+        android:visibility="invisible"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/expanded_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible" />
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
+        android:columnWidth="100dp"
+        android:horizontalSpacing="10dp"
+        android:verticalSpacing="10dp"
+        android:layout_gravity="bottom"/>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
+        android:layout_gravity="bottom">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/thumb_button_1"
+                android:layout_width="100dp"
+                android:layout_height="75dp"
+                android:layout_marginRight="1dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/a1"
+                android:layout_marginEnd="1dp" />
+
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+
+
+<!-- This initially-hidden ImageView will hold the expanded/zoomed version of
+     the images above. Without transformations applied, it takes up the entire
+     screen. To achieve the "zoom" animation, this view's bounds are animated
+     from the bounds of the thumbnail button above, to its final laid-out
+     bounds.
+     -->
+
+</FrameLayout>
