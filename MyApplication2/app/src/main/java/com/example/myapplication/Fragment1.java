@@ -55,11 +55,12 @@ public class Fragment1 extends Fragment {
     private String mParam2;
     private int len;
     private String search_text;
+    int stringInSearchText = 0;
     //private ArrayAdapter<String> adapter;
     //private ArrayList<String> final_list;
 
     ListViewAdapter adapter;
-
+    ListViewAdapter adapter2;
 
     //private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>() ;
 
@@ -174,6 +175,7 @@ public class Fragment1 extends Fragment {
         View view = inflater.inflate(R.layout.fragment_1, null);
 
         adapter = new ListViewAdapter() ;
+        adapter2 = new ListViewAdapter();
 
         //final_list 초기화
 
@@ -183,7 +185,6 @@ public class Fragment1 extends Fragment {
         listview.setAdapter(adapter);
 
         doJSONParser();
-
 
         for (int i =0; i<len; i++) {
             adapter.addItemLast(ContextCompat.getDrawable(getActivity(), R.drawable.human), NAME[i]);
@@ -257,25 +258,35 @@ public class Fragment1 extends Fragment {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                stringInSearchText = 0;
                 //1. edit text 가져오기
                 EditText Search = getActivity().findViewById(R.id.search);
                 search_text = Search.getText().toString();
+                adapter2.clearAdapter();
 
-                if (search_text ==""){
-                    //final_list.get()
+
+                //listview.setAdapter(adapter2);
+                if (search_text.length() == 0){
+                    listview.setAdapter(adapter);
                 }
-                //2. listview에서 찾기
-                for (int i =0 ; i<NAME.length; i++){
-                    if (search_text == NAME[i]){
-                        //final_list
+                else {
+                    //2. listview에서 찾기
+                    listview.setAdapter(adapter2);
+                    System.out.println("0102222222".toLowerCase());
+                    for (int i = 0; i < NAME.length; i++) {
+                        if (NAME[i].toLowerCase().contains(search_text.toLowerCase()) || PHONE[i].contains(search_text)) {
+                            System.out.println();
+                            adapter2.addItemLast(ContextCompat.getDrawable(getActivity(), R.drawable.human), NAME[i]);
+                            stringInSearchText = stringInSearchText + 1;
+                        }
                     }
+                    if (stringInSearchText == 0) {
+                        adapter2.clearAdapter();
+                    }
+
                 }
             }
         });
-
-
-
         return view;
     }
 

@@ -98,9 +98,8 @@ public class ListViewAdapter extends BaseAdapter {
         return listViewItemList.get(index).getTitle();
     }
 
-
-
-
-
+    public void clearAdapter(){
+        listViewItemList.removeAll(listViewItemList);
+    }
 
 }
