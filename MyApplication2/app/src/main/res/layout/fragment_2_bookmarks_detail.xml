@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/container_detail"
+    android:id="@+id/container_bookmarks_detail"
     android:background="@color/white"
     tools:context=".Fragment2">
 
@@ -47,14 +47,15 @@
             android:layout_height="match_parent"
             android:visibility="invisible" />
     </LinearLayout>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="96dp"
-        android:columnWidth="100dp"
-        android:horizontalSpacing="10dp"
-        android:verticalSpacing="10dp"
-        android:layout_gravity="bottom"/>
+
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/recyclerview"-->
+<!--        android:layout_width="100dp"-->
+<!--        android:layout_height="75dp"-->
+<!--        android:columnWidth="100dp"-->
+<!--        android:horizontalSpacing="10dp"-->
+<!--        android:verticalSpacing="10dp"-->
+<!--        android:layout_gravity="bottom"/>-->
 
     <HorizontalScrollView
         android:layout_width="match_parent"

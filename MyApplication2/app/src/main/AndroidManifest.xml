@@ -21,6 +21,8 @@
 
         <activity android:name=".Fragment2Activity">
         </activity>
+        <activity android:name=".Fragment2BookmarksActivity">
+        </activity>
 
         <activity android:name=".SubActivity">
         </activity>

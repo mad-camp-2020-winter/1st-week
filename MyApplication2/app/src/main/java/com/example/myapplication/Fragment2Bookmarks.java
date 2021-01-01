@@ -78,7 +78,7 @@ public class Fragment2Bookmarks extends Fragment {
 //                activity.onFragmentChange(1);
 //                activity.addFragment2Detail();
                 // Sending image id to FullScreenActivity
-                Intent i = new Intent(getActivity(), Fragment2Activity.class);
+                Intent i = new Intent(getActivity(), Fragment2BookmarksActivity.class);
                 // passing array index
                 i.putExtra("id", position);
                 startActivity(i);
