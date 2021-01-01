@@ -55,8 +55,13 @@ public class Fragment1 extends Fragment {
     private String mParam2;
     private int len;
     private String search_text;
-    private ArrayAdapter<String> adapter;
-    private ArrayList<String> final_list;
+    //private ArrayAdapter<String> adapter;
+    //private ArrayList<String> final_list;
+
+    ListViewAdapter adapter;
+
+
+    //private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>() ;
 
 
     //json 파일을 스트링으로 읽어오기
@@ -152,8 +157,8 @@ public class Fragment1 extends Fragment {
     }
 
     public int find_index(String text){
-                for (int i = 0 ; i<final_list.size() ;i++){
-                    if (text == final_list.get(i)){
+                for (int i = 0 ; i<adapter.getCount() ;i++){
+                    if (text == adapter.getObjString(i)){
                         return i;
                     }
                 }
@@ -168,44 +173,48 @@ public class Fragment1 extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_1, null);
 
+        adapter = new ListViewAdapter() ;
 
         //final_list 초기화
-        final_list = new ArrayList<String>();
 
+        //final_list = new ArrayList<String>();
+
+        ListView listview = (ListView) view.findViewById(R.id.listview1);
+        listview.setAdapter(adapter);
 
         doJSONParser();
 
 
-        for (int i =0; i<len; i++){
-            final_list.add(NAME[i]);
+        for (int i =0; i<len; i++) {
+            adapter.addItemLast(ContextCompat.getDrawable(getActivity(), R.drawable.human), NAME[i]);
         }
 
-        adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),android.R.layout.simple_list_item_1,final_list);
-        ListView listview = (ListView) view.findViewById(R.id.listview1);
-
-        listview.setAdapter(adapter);
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String strText = (String) parent.getItemAtPosition(position);
 
-                String titleStr = strText ;
+                ListViewItem item = (ListViewItem) parent.getItemAtPosition(position) ;
+
+                String titleStr = item.getTitle() ;
+                Drawable iconDrawable = item.getIcon() ;
 
                 // TODO : use titleStr data.
                 int index = findNum(titleStr); //index는 name에 해당하는 번호 찾는거
                 int index2 = find_index(titleStr); //index2는 final_list에서 어디에 위치하는지 찾는거
 
-                if (index >= 0 && (index2+1) == final_list.size() ){
-                    final_list.add(PHONE[index]);
+
+
+                if (index >= 0 && (index2+1) == adapter.getCount() ){
+                    adapter.addItemLast(ContextCompat.getDrawable(getActivity(), R.drawable.phone),PHONE[index]);
                     adapter.notifyDataSetChanged();
                 }
-                else if (index>=0 && findNum(final_list.get(index2+1))>=0) { //아래에 숫자를 나오게 해야할 때
-                    final_list.add(index2+1,PHONE[index]);
+                else if (index>=0 && findNum(adapter.getObjString(index2+1))>=0) { //아래에 숫자를 나오게 해야할 때
+                    adapter.addItemIndex(index2+1,ContextCompat.getDrawable(getActivity(), R.drawable.phone),PHONE[index]);
                     adapter.notifyDataSetChanged();
                 }
-                else if(index>=0 && findNum(final_list.get(index2+1))<0){ //아래에 번호 나와있는데 이름 또 눌렀을 때
-                    final_list.remove(index2+1);
+                else if(index>=0 && findNum(adapter.getObjString(index2+1))<0){ //아래에 번호 나와있는데 이름 또 눌렀을 때
+                    adapter.removeItem(index2+1);
                     adapter.notifyDataSetChanged();
                 }
                 else if (index < 0){ //숫자를 눌렀을 때
@@ -228,6 +237,8 @@ public class Fragment1 extends Fragment {
                     }
                 }
             }
+
+
         });
 
         //+ add address 구현하기

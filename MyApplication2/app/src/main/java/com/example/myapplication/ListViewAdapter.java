@@ -68,7 +68,16 @@ public class ListViewAdapter extends BaseAdapter {
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
 
-    public void addItem(Drawable icon, String title) {
+    public void addItemIndex(int index, Drawable icon, String title) {
+        ListViewItem item = new ListViewItem();
+
+        item.setIcon(icon);
+        item.setTitle(title);
+
+        listViewItemList.add(index, item);
+    }
+
+    public void addItemLast(Drawable icon, String title) {
         ListViewItem item = new ListViewItem();
 
         item.setIcon(icon);
@@ -76,6 +85,22 @@ public class ListViewAdapter extends BaseAdapter {
 
         listViewItemList.add(item);
     }
+
+    public void removeItem(int index) {
+        ListViewItem item = new ListViewItem();
+
+        listViewItemList.remove(index);
+    }
+
+    public String getObjString(int index) {
+        ListViewItem item = new ListViewItem();
+
+        return listViewItemList.get(index).getTitle();
+    }
+
+
+
+
 
 
 }
