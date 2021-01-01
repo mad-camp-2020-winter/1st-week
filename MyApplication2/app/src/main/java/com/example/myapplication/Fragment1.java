@@ -143,7 +143,7 @@ public class Fragment1 extends Fragment {
     }
 
     public int findNum(String text){
-        for (int i=0; i<10;i++){
+        for (int i=0; i<NAME.length ;i++){
             if (text == NAME[i]){
                 return i;
             };
@@ -182,6 +182,7 @@ public class Fragment1 extends Fragment {
 
         adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),android.R.layout.simple_list_item_1,final_list);
         ListView listview = (ListView) view.findViewById(R.id.listview1);
+
         listview.setAdapter(adapter);
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -195,7 +196,11 @@ public class Fragment1 extends Fragment {
                 int index = findNum(titleStr); //index는 name에 해당하는 번호 찾는거
                 int index2 = find_index(titleStr); //index2는 final_list에서 어디에 위치하는지 찾는거
 
-                if (index>=0 && findNum(final_list.get(index2+1))>=0) { //아래에 숫자를 나오게 해야할 때
+                if (index >= 0 && (index2+1) == final_list.size() ){
+                    final_list.add(PHONE[index]);
+                    adapter.notifyDataSetChanged();
+                }
+                else if (index>=0 && findNum(final_list.get(index2+1))>=0) { //아래에 숫자를 나오게 해야할 때
                     final_list.add(index2+1,PHONE[index]);
                     adapter.notifyDataSetChanged();
                 }
@@ -203,10 +208,9 @@ public class Fragment1 extends Fragment {
                     final_list.remove(index2+1);
                     adapter.notifyDataSetChanged();
                 }
-
-
-                else{
+                else if (index < 0){ //숫자를 눌렀을 때
                     //titleStr
+
 
                     if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                         ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE, Manifest.permission.SEND_SMS, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
@@ -222,9 +226,7 @@ public class Fragment1 extends Fragment {
                     catch (Exception e){
                         e.printStackTrace();
                     }
-
                 }
-
             }
         });
 
@@ -249,9 +251,14 @@ public class Fragment1 extends Fragment {
                 EditText Search = getActivity().findViewById(R.id.search);
                 search_text = Search.getText().toString();
 
+                if (search_text ==""){
+                    //final_list.get()
+                }
                 //2. listview에서 찾기
                 for (int i =0 ; i<NAME.length; i++){
-
+                    if (search_text == NAME[i]){
+                        //final_list
+                    }
                 }
             }
         });
