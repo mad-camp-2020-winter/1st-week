@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -30,6 +31,8 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+
 import android.graphics.drawable.Drawable;
 import android.widget.Toast;
 
@@ -47,11 +50,13 @@ public class Fragment1 extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private static String[] NAME;
     private static String[] PHONE;
-    private static String[] FINAL_LIST;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private int len;
+    private String search_text;
+    private ArrayAdapter<String> adapter;
+    private ArrayList<String> final_list;
 
 
     //json 파일을 스트링으로 읽어오기
@@ -118,7 +123,7 @@ public class Fragment1 extends Fragment {
      * @return A new instance of fragment Fragment1.
      */
     // TODO: Rename and change types and number of parameters
-    public static Fragment1 newInstance(String param1, String param2) {
+            public static Fragment1 newInstance(String param1, String param2) {
         Fragment1 fragment = new Fragment1();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
@@ -146,6 +151,15 @@ public class Fragment1 extends Fragment {
         return -1;
     }
 
+    public int find_index(String text){
+                for (int i = 0 ; i<final_list.size() ;i++){
+                    if (text == final_list.get(i)){
+                        return i;
+                    }
+                }
+                return -1;
+    }
+
 
 
     @Override
@@ -153,80 +167,44 @@ public class Fragment1 extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_1, null);
-        ListViewAdapter adapter;
 
+
+        //final_list 초기화
+        final_list = new ArrayList<String>();
 
 
         doJSONParser();
-        FINAL_LIST = new String[len];
+
 
         for (int i =0; i<len; i++){
-            FINAL_LIST[i] = NAME[i];
+            final_list.add(NAME[i]);
         }
-        String[] original = FINAL_LIST;
 
-        //ArrayAdapter adapter = new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1, FINAL_LIST);
-        adapter = new ListViewAdapter() ;
-
-        //LIST_MENU에 json으로부터 읽은 파일 넣기
-
+        adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),android.R.layout.simple_list_item_1,final_list);
         ListView listview = (ListView) view.findViewById(R.id.listview1);
         listview.setAdapter(adapter);
-
-        for (int i=0; i< len; i++){
-            adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.human),FINAL_LIST[i]);
-        }
-
-        //+ add address 구현하기
-        Button button1 = view.findViewById(R.id.button_frag1);
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(getActivity(),SubActivity.class);
-                startActivity(intent);
-            }
-        });
-
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String strText = (String) parent.getItemAtPosition(position);
 
-                ListViewItem item = (ListViewItem) parent.getItemAtPosition(position) ;
+                String titleStr = strText ;
 
-                String titleStr = item.getTitle() ;
-                Drawable iconDrawable = item.getIcon() ;
+                // TODO : use titleStr data.
+                int index = findNum(titleStr); //index는 name에 해당하는 번호 찾는거
+                int index2 = find_index(titleStr); //index2는 final_list에서 어디에 위치하는지 찾는거
 
-                // TODO : use item data.
-
-                ListViewAdapter adapter;
-                adapter = new ListViewAdapter() ;
-                listview.setAdapter(adapter);
-
-                FINAL_LIST = original;
-                int index = findNum(titleStr);
-
-                if (index>=0) {
-                    FINAL_LIST = new String[len+1];
-                    for (int i = 0; i < len + 1; i++) {
-                        if (i <= index) {
-                            FINAL_LIST[i] = NAME[i];
-                        } else if (i == index + 1) {
-                            FINAL_LIST[i] = PHONE[index];
-
-                        } else {
-                            FINAL_LIST[i] = NAME[i - 1];
-                        }
-                    }
-                    for (int i = 0; i<FINAL_LIST.length; i++) {
-                        if (i == index+1 && FINAL_LIST.length > len) {
-                            adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.phone), FINAL_LIST[i]);
-                        }
-                        else{
-                            adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.human), FINAL_LIST[i]);
-                        }
-                    }
+                if (index>=0 && findNum(final_list.get(index2+1))>=0) { //아래에 숫자를 나오게 해야할 때
+                    final_list.add(index2+1,PHONE[index]);
+                    adapter.notifyDataSetChanged();
                 }
+                else if(index>=0 && findNum(final_list.get(index2+1))<0){ //아래에 번호 나와있는데 이름 또 눌렀을 때
+                    final_list.remove(index2+1);
+                    adapter.notifyDataSetChanged();
+                }
+
+
                 else{
                     //titleStr
 
@@ -245,15 +223,42 @@ public class Fragment1 extends Fragment {
                         e.printStackTrace();
                     }
 
-                    adapter = new ListViewAdapter() ;
-                    listview.setAdapter(adapter);
+                }
 
-                    FINAL_LIST = original;
+            }
+        });
+
+        //+ add address 구현하기
+        Button button1 = view.findViewById(R.id.button_frag1);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getActivity(),SubActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+        //search 후 찾는 기능 구현하기
+        Button button2 = view.findViewById(R.id.enter);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //1. edit text 가져오기
+                EditText Search = getActivity().findViewById(R.id.search);
+                search_text = Search.getText().toString();
+
+                //2. listview에서 찾기
+                for (int i =0 ; i<NAME.length; i++){
+
                 }
             }
         });
+
+
+
         return view;
     }
-
 
 }

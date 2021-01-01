@@ -51,18 +51,10 @@ public class SubActivity extends AppCompatActivity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent intent=new Intent(SubActivity.this,MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-
             }
         });
-
-
-
-
-
-
     }
 }
