@@ -4,24 +4,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Fragment2#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class Fragment2 extends Fragment {
+import androidx.fragment.app.Fragment;
+
+public class Fragment2Bookmarks extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,7 +29,7 @@ public class Fragment2 extends Fragment {
 
     MainActivity activity;
 
-    public Fragment2() {
+    public Fragment2Bookmarks() {
         // Required empty public constructor
     }
 
@@ -47,8 +42,8 @@ public class Fragment2 extends Fragment {
      * @return A new instance of fragment Fragment2.
      */
     // TODO: Rename and change types and number of parameters
-    public static Fragment2 newInstance(String param1, String param2) {
-        Fragment2 fragment = new Fragment2();
+    public static Fragment2Bookmarks newInstance(String param1, String param2) {
+        Fragment2Bookmarks fragment = new Fragment2Bookmarks();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -70,12 +65,12 @@ public class Fragment2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_2, container, false);
+        View view = inflater.inflate(R.layout.fragment_2_bookmarks, container, false);
 
         //갤러리 gridView 선언
-        GridView gridView = (GridView) view.findViewById(R.id.gridView1);
-        gridView.setAdapter(new Fragment2.ImageAdapter(this.getContext()));
-
+        GridView gridView = (GridView) view.findViewById(R.id.gridView2);
+        ListAdapter adapter = new Fragment2Bookmarks.ImageAdapter(this.getContext());
+        gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v,
@@ -90,14 +85,15 @@ public class Fragment2 extends Fragment {
             }
         });
 
-        //하트 누를시 즐겨찾기로 이동
-        final View menuHeartView = view.findViewById(R.id.menu_heart);
-        menuHeartView.setOnClickListener(new View.OnClickListener() {
+        //홈 누를시 원래 갤러리로 이동
+        final View menuHomeView = view.findViewById(R.id.menu_home);
+        menuHomeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                activity.onFragmentChange(1);
+                activity.onFragmentChange(0);
             }
         });
+
 
         return view;
     }
@@ -119,7 +115,7 @@ public class Fragment2 extends Fragment {
     public class ImageAdapter extends BaseAdapter {
         private Context context;
 
-        private Integer[] images = GlobalVariables.images;
+        private Integer[] images = GlobalVariables.bookMarks.toArray(new Integer[GlobalVariables.bookMarks.size()]);
 
         public ImageAdapter(Context con){
             this.context = con;
@@ -164,5 +160,4 @@ public class Fragment2 extends Fragment {
             return imageView;
         }
     }
-
 }
