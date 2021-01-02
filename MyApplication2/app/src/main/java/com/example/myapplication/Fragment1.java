@@ -55,7 +55,8 @@ public class Fragment1 extends Fragment {
     private String mParam2;
     private int len;
     private String search_text;
-    int stringInSearchText = 0;
+    private int stringInSearchText = 0;
+    private int adapterMode = 0;
     //private ArrayAdapter<String> adapter;
     //private ArrayList<String> final_list;
 
@@ -195,10 +196,10 @@ public class Fragment1 extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                ListViewItem item = (ListViewItem) parent.getItemAtPosition(position) ;
+                ListViewItem item = (ListViewItem) parent.getItemAtPosition(position);
 
-                String titleStr = item.getTitle() ;
-                Drawable iconDrawable = item.getIcon() ;
+                String titleStr = item.getTitle();
+                Drawable iconDrawable = item.getIcon();
 
                 // TODO : use titleStr data.
                 int index = findNum(titleStr); //index는 name에 해당하는 번호 찾는거
@@ -206,35 +207,62 @@ public class Fragment1 extends Fragment {
 
 
 
-                if (index >= 0 && (index2+1) == adapter.getCount() ){
-                    adapter.addItemLast(ContextCompat.getDrawable(getActivity(), R.drawable.phone),PHONE[index]);
-                    adapter.notifyDataSetChanged();
-                }
-                else if (index>=0 && findNum(adapter.getObjString(index2+1))>=0) { //아래에 숫자를 나오게 해야할 때
-                    adapter.addItemIndex(index2+1,ContextCompat.getDrawable(getActivity(), R.drawable.phone),PHONE[index]);
-                    adapter.notifyDataSetChanged();
-                }
-                else if(index>=0 && findNum(adapter.getObjString(index2+1))<0){ //아래에 번호 나와있는데 이름 또 눌렀을 때
-                    adapter.removeItem(index2+1);
-                    adapter.notifyDataSetChanged();
-                }
-                else if (index < 0){ //숫자를 눌렀을 때
-                    //titleStr
+                if (adapterMode == 0) {
+                    if (index >= 0 && (index2 + 1) == adapter.getCount()) {
+                        adapter.addItemLast(ContextCompat.getDrawable(getActivity(), R.drawable.phone), PHONE[index]);
+                        adapter.notifyDataSetChanged();
+                    } else if (index >= 0 && findNum(adapter.getObjString(index2 + 1)) >= 0) { //아래에 숫자를 나오게 해야할 때
+                        adapter.addItemIndex(index2 + 1, ContextCompat.getDrawable(getActivity(), R.drawable.phone), PHONE[index]);
+                        adapter.notifyDataSetChanged();
+                    } else if (index >= 0 && findNum(adapter.getObjString(index2 + 1)) < 0) { //아래에 번호 나와있는데 이름 또 눌렀을 때
+                        adapter.removeItem(index2 + 1);
+                        adapter.notifyDataSetChanged();
+                    } else if (index < 0) { //숫자를 눌렀을 때
+                        //titleStr
 
 
-                    if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE, Manifest.permission.SEND_SMS, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+                        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE, Manifest.permission.SEND_SMS, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+                        }
+
+                        String call_num = "tel:" + titleStr;
+                        Intent intent = new Intent(Intent.ACTION_CALL);
+                        intent.setData(Uri.parse(call_num));
+
+                        try {
+                            getContext().startActivity(intent);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
+                }
 
-                    String call_num = "tel:"+ titleStr;
-                    Intent intent = new Intent(Intent.ACTION_CALL);
-                    intent.setData(Uri.parse(call_num));
+                else if (adapterMode == 1){
+                    if (index >= 0 && (index2 + 1) == adapter2.getCount()) {
+                        adapter2.addItemLast(ContextCompat.getDrawable(getActivity(), R.drawable.phone), PHONE[index]);
+                        adapter2.notifyDataSetChanged();
+                    } else if (index >= 0 && findNum(adapter2.getObjString(index2 + 1)) >= 0) { //아래에 숫자를 나오게 해야할 때
+                        adapter2.addItemIndex(index2 + 1, ContextCompat.getDrawable(getActivity(), R.drawable.phone), PHONE[index]);
+                        adapter2.notifyDataSetChanged();
+                    } else if (index >= 0 && findNum(adapter2.getObjString(index2 + 1)) < 0) { //아래에 번호 나와있는데 이름 또 눌렀을 때
+                        adapter2.removeItem(index2 + 1);
+                        adapter2.notifyDataSetChanged();
+                    } else if (index < 0) { //숫자를 눌렀을 때
+                        //titleStr
 
-                    try{
-                        getContext().startActivity(intent);
-                    }
-                    catch (Exception e){
-                        e.printStackTrace();
+                        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE, Manifest.permission.SEND_SMS, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+                        }
+
+                        String call_num = "tel:" + titleStr;
+                        Intent intent = new Intent(Intent.ACTION_CALL);
+                        intent.setData(Uri.parse(call_num));
+
+                        try {
+                            getContext().startActivity(intent);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
@@ -264,15 +292,14 @@ public class Fragment1 extends Fragment {
                 search_text = Search.getText().toString();
                 adapter2.clearAdapter();
 
-
-                //listview.setAdapter(adapter2);
                 if (search_text.length() == 0){
+                    adapterMode = 0;
                     listview.setAdapter(adapter);
                 }
                 else {
                     //2. listview에서 찾기
+                    adapterMode = 1;
                     listview.setAdapter(adapter2);
-                    System.out.println("0102222222".toLowerCase());
                     for (int i = 0; i < NAME.length; i++) {
                         if (NAME[i].toLowerCase().contains(search_text.toLowerCase()) || PHONE[i].contains(search_text)) {
                             System.out.println();
