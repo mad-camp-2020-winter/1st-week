@@ -238,10 +238,17 @@ public class Fragment1 extends Fragment {
                 }
 
                 else if (adapterMode == 1){
-                    if (index >= 0 && (index2 + 1) == adapter2.getCount()) {
+                    if (index >= 0 && position+1 == adapter2.getCount()) { //하나 밖에 없을 때 숫자 나오게 하기
                         adapter2.addItemLast(ContextCompat.getDrawable(getActivity(), R.drawable.phone), PHONE[index]);
                         adapter2.notifyDataSetChanged();
-                    } else if (index >= 0 && findNum(adapter2.getObjString(index2 + 1)) >= 0) { //아래에 숫자를 나오게 해야할 때
+                    }
+                    // 이름 누르면 번호 들어가게 하기
+                    else if( index >= 0 && findNum(adapter2.getObjString(position+1)) < 0){
+                        adapter2.removeItem(position + 1);
+                        adapter2.notifyDataSetChanged();
+                    }
+                    //여기서부턴 여러개의 데이터가 나왔을 때
+                    else if (index >= 0 && findNum(adapter2.getObjString(index2 + 1)) >= 0) { //아래에 숫자를 나오게 해야할 때
                         adapter2.addItemIndex(index2 + 1, ContextCompat.getDrawable(getActivity(), R.drawable.phone), PHONE[index]);
                         adapter2.notifyDataSetChanged();
                     } else if (index >= 0 && findNum(adapter2.getObjString(index2 + 1)) < 0) { //아래에 번호 나와있는데 이름 또 눌렀을 때
