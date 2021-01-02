@@ -167,6 +167,14 @@ public class Fragment1 extends Fragment {
                 return -1;
     }
 
+    public int find_index2(String text){
+        for (int i = 0 ; i<adapter2.getCount() ;i++){
+            if (text == adapter2.getObjString(i)){
+                return i;
+            }
+        }
+        return -1;
+    }
 
 
     @Override
@@ -205,8 +213,6 @@ public class Fragment1 extends Fragment {
                 int index = findNum(titleStr); //index는 name에 해당하는 번호 찾는거
                 int index2 = find_index(titleStr); //index2는 final_list에서 어디에 위치하는지 찾는거
 
-
-
                 if (adapterMode == 0) {
                     if (index >= 0 && (index2 + 1) == adapter.getCount()) {
                         adapter.addItemLast(ContextCompat.getDrawable(getActivity(), R.drawable.phone), PHONE[index]);
@@ -219,7 +225,6 @@ public class Fragment1 extends Fragment {
                         adapter.notifyDataSetChanged();
                     } else if (index < 0) { //숫자를 눌렀을 때
                         //titleStr
-
 
                         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE, Manifest.permission.SEND_SMS, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
@@ -238,23 +243,16 @@ public class Fragment1 extends Fragment {
                 }
 
                 else if (adapterMode == 1){
-                    if (index >= 0 && position+1 == adapter2.getCount()) { //하나 밖에 없을 때 숫자 나오게 하기
-                        adapter2.addItemLast(ContextCompat.getDrawable(getActivity(), R.drawable.phone), PHONE[index]);
-                        adapter2.notifyDataSetChanged();
-                    }
-                    // 이름 누르면 번호 들어가게 하기
-                    else if( index >= 0 && findNum(adapter2.getObjString(position+1)) < 0){
-                        adapter2.removeItem(position + 1);
-                        adapter2.notifyDataSetChanged();
-                    }
-                    //여기서부턴 여러개의 데이터가 나왔을 때
-                    else if (index >= 0 && findNum(adapter2.getObjString(index2 + 1)) >= 0) { //아래에 숫자를 나오게 해야할 때
+                    index2 = find_index2(titleStr); //index2는 final_list에서 어디에 위치하는지 찾는거
+                    if ((index>=0 && (position + 1== adapter2.getCount())) || (index >= 0 && findNum(adapter2.getObjString(index2 + 1)) >= 0) ){ // 문자를 눌렀을 때
                         adapter2.addItemIndex(index2 + 1, ContextCompat.getDrawable(getActivity(), R.drawable.phone), PHONE[index]);
                         adapter2.notifyDataSetChanged();
-                    } else if (index >= 0 && findNum(adapter2.getObjString(index2 + 1)) < 0) { //아래에 번호 나와있는데 이름 또 눌렀을 때
+                    }
+                    else if(index>=0 && findNum(adapter2.getObjString(index2 + 1)) < 0){
                         adapter2.removeItem(index2 + 1);
                         adapter2.notifyDataSetChanged();
-                    } else if (index < 0) { //숫자를 눌렀을 때
+                    }
+                    else if (index < 0) { //숫자를 눌렀을 때
                         //titleStr
 
                         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
