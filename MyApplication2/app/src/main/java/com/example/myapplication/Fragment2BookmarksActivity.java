@@ -36,6 +36,11 @@ public class Fragment2BookmarksActivity extends Activity implements View.OnClick
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_2_bookmarks_detail);

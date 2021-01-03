@@ -1,12 +1,14 @@
 package com.example.myapplication;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -28,7 +30,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -57,6 +64,7 @@ public class Fragment1 extends Fragment {
     private String search_text;
     private int stringInSearchText = 0;
     private int adapterMode = 0;
+    private int index3 = 0;
     //private ArrayAdapter<String> adapter;
     //private ArrayList<String> final_list;
 
@@ -66,36 +74,55 @@ public class Fragment1 extends Fragment {
     //private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>() ;
 
 
-    //json 파일을 스트링으로 읽어오기
-    private String getJasonString(){
-        String json ="";
+    private String getTxtString() throws IOException {
 
-        try {
-            InputStream is = getActivity().getAssets().open("adress_data.json");
-            int fileSize = is.available();
+/*
+        BufferedWriter bw = new BufferedWriter(new FileWriter(getActivity().getFilesDir() + "address.txt", false));
 
-            byte[] buffer = new byte[fileSize];
-            is.read(buffer);
-            is.close();
+        //초기 값
+        bw.write("[\n" +
+                "  {\n" +
+                "    \"name\":\"♡mom♡\",\n" +
+                "    \"phone\":\"01043741113\"\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"name\":\"♡dad♡\",\n" +
+                "    \"phone\":\"01032917507\"\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"name\":\"nahye\",\n" +
+                "    \"phone\":\"01094904447\"\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"name\":\"♡grandma♡\",\n" +
+                "    \"phone\":\"01034689496\"\n" +
+                "  }\n" +
+                "]" );
 
-            json = new String(buffer, "UTF-8");
+        bw.close();
+
+
+*/
+
+        BufferedReader br = new BufferedReader(new FileReader(getActivity().getFilesDir() + "address.txt"));
+        String readStr = "";
+        String str = null;
+        while (((str = br.readLine()) != null)) {
+            readStr += str + "\n";
         }
-        catch (IOException ex)
-        {
-            ex.printStackTrace();
-        }
+        br.close();
 
-        return json;
+        return readStr;
     }
 
 
     //json 파싱하기
-    void doJSONParser() {
+    void doJSONParser() throws IOException {
         // json 데이터
+
         StringBuffer sb = new StringBuffer();
 
-        String str = getJasonString();
-
+        String str = getTxtString();
 
         try {
             JSONArray jarray = new JSONArray(str);
@@ -193,11 +220,113 @@ public class Fragment1 extends Fragment {
         ListView listview = (ListView) view.findViewById(R.id.listview1);
         listview.setAdapter(adapter);
 
-        doJSONParser();
+        try {
+            doJSONParser();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         for (int i =0; i<len; i++) {
             adapter.addItemLast(ContextCompat.getDrawable(getActivity(), R.drawable.human), NAME[i]);
         }
+
+
+        //버튼을 길게 누르면 삭제하는 팝업창 띄우기
+        listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view,
+                                           int position, long id) {
+
+                ListViewItem item = (ListViewItem) parent.getItemAtPosition(position);
+
+                String titleStr = item.getTitle();
+                index3 = findNum(titleStr);
+                index3 = index3 +1;
+
+                new AlertDialog.Builder(getActivity()) // TestActivity 부분에는 현재 Activity의 이름 입력.
+                        .setNeutralButton("delete", new DialogInterface.OnClickListener() {      // 버튼1 (직접 작성)
+                            public void onClick(DialogInterface dialog, int which){
+
+
+                                BufferedReader delete_br = null;
+                                try {
+                                    delete_br = new BufferedReader(new FileReader(getActivity().getFilesDir() + "address.txt"));
+                                } catch (FileNotFoundException e) {
+                                    e.printStackTrace();
+                                }
+                                String delete_Str = "";
+                                String str_input = null;
+                                String dummy = "";
+                                int line_num = 0;
+                                while (true) {
+                                    line_num = line_num +1;
+                                    try {
+                                        if ((str_input = delete_br.readLine()) != null){
+                                            if ((line_num>=(index3*3+1)) && line_num <=(index3*3+4)){
+                                                dummy += dummy + "\n";
+                                            }
+                                            else{
+                                                delete_Str += str_input + "\n";
+                                            }
+                                        }
+                                        else{
+                                            break;
+                                        }
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                try {
+                                    delete_br.close();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+                                BufferedWriter bw = null;
+                                try {
+                                    bw = new BufferedWriter(new FileWriter(getActivity().getFilesDir() + "address.txt", false));
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+                                try {
+                                    bw.write(delete_Str);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+                                try {
+                                    bw.close();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+
+                                try {
+                                    doJSONParser();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+                                adapter.clearAdapter();
+                                for (int i =0; i<len; i++) {
+                                    adapter.addItemLast(ContextCompat.getDrawable(getActivity(), R.drawable.human), NAME[i]);
+                                }
+                                adapter.notifyDataSetChanged();
+
+                                System.out.println(delete_Str);
+
+                                //Toast.makeText(getActivity().getApplicationContext(), "확인 누름", Toast.LENGTH_SHORT).show(); // 실행할 코드
+                            }
+                        })
+                        .show();
+
+
+                return true;
+            }
+        });
+
+
 
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -271,8 +400,6 @@ public class Fragment1 extends Fragment {
                     }
                 }
             }
-
-
         });
 
         //+ add address 구현하기
@@ -307,7 +434,6 @@ public class Fragment1 extends Fragment {
                     listview.setAdapter(adapter2);
                     for (int i = 0; i < NAME.length; i++) {
                         if (NAME[i].toLowerCase().contains(search_text.toLowerCase()) || PHONE[i].contains(search_text)) {
-                            System.out.println();
                             adapter2.addItemLast(ContextCompat.getDrawable(getActivity(), R.drawable.human), NAME[i]);
                             stringInSearchText = stringInSearchText + 1;
                         }
@@ -315,7 +441,6 @@ public class Fragment1 extends Fragment {
                     if (stringInSearchText == 0) {
                         adapter2.clearAdapter();
                     }
-
                 }
             }
         });
