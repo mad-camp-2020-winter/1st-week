@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
+import androidx.viewpager.widget.ViewPager;
 
 import java.util.ArrayList;
 
@@ -36,11 +37,6 @@ public class Fragment2BookmarksActivity extends Activity implements View.OnClick
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_2_bookmarks_detail);
@@ -48,7 +44,14 @@ public class Fragment2BookmarksActivity extends Activity implements View.OnClick
         //fragment에서 누른 이미지 확대
         Intent intent = getIntent();
         int position = intent.getExtras().getInt("id");
-        zoomImageFromThumb(imagePosition = GlobalVariables.bookMarks.get(position));
+
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager_fragment2) ;
+        BookmarksVPAdapter pagerAdapter = new BookmarksVPAdapter(this, position) ;
+        viewPager.setAdapter(pagerAdapter) ;
+        viewPager.setCurrentItem(position);
+//        viewPager.set
+
+//        zoomImageFromThumb(imagePosition = GlobalVariables.bookMarks.get(position));
 
 //        //clickListener 설정
 //        for (int i = 0; i <= GlobalVariables.IMAGEMAX - 1; i++) {
@@ -64,8 +67,8 @@ public class Fragment2BookmarksActivity extends Activity implements View.OnClick
 //                }
 //            });
 //        }
-
-        switchHeartListener();
+//
+//        switchHeartListener();
     }
 
     private void createApps() {
