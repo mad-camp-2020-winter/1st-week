@@ -6,15 +6,40 @@
     tools:context=".Fragment3">
 
     <!-- TODO: Update blank fragment layout -->
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_gravity="center_horizontal"
-        android:textStyle="bold"
-        android:id ="@+id/button1"
-        android:layout_weight = '1'
-        android:text = "Font Size Change"
-        android:onClick="btnClick"
-        />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:text="선택 ㄱㄱ"></TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            >
+
+            <Button
+                android:id="@+id/male_button"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="남자 연예인"></Button>
+
+
+            <Button
+                android:id="@+id/female_button"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="여자 연예인"></Button>
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
 
 </FrameLayout>
