@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,10 +21,12 @@ public class Fragment2Activity extends Activity implements View.OnClickListener 
 
 
     //추가 변수
-    private int imagePosition = 0;
+    private int pos;
+    private ViewPager viewPager;
 
     View t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21;
     private View[] thumbView = {t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21};
+    private Integer[] images = GlobalVariables.images;
 
     public Fragment2Activity(){
 
@@ -41,8 +44,38 @@ public class Fragment2Activity extends Activity implements View.OnClickListener 
 
         //fragment에서 누른 이미지 확대
         Intent intent = getIntent();
-        int position = intent.getExtras().getInt("id");
-        zoomImageFromThumb(imagePosition = GlobalVariables.images[position]);
+        pos = intent.getExtras().getInt("id");
+
+        viewPager = (ViewPager) findViewById(R.id.viewpager_fragment2_detail) ;
+        BookmarksVPAdapter pagerAdapter = new BookmarksVPAdapter(this, 0) ;
+        viewPager.setAdapter(pagerAdapter) ;
+        viewPager.setCurrentItem(pos);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                ImageView heartBlankView = (ImageView) findViewById(R.id.heart_blank);
+                ImageView heartView = (ImageView) findViewById(R.id.heart);
+
+                if (GlobalVariables.inBookMarks(images[position])) {
+                    heartBlankView.setVisibility(View.INVISIBLE);
+                    heartView.setVisibility(View.VISIBLE);
+                }
+                else if (!GlobalVariables.inBookMarks(images[position])) {
+                    heartBlankView.setVisibility(View.VISIBLE);
+                    heartView.setVisibility(View.INVISIBLE);
+                }
+                switchHeartListener(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
+
 
         //clickListener 설정
         for (int i = 0; i <= GlobalVariables.IMAGEMAX - 1; i++) {
@@ -59,27 +92,45 @@ public class Fragment2Activity extends Activity implements View.OnClickListener 
             });
         }
 
-        switchHeartListener();
+        switchHeartListener(pos);
+        heartIndicator();
     }
 
-    public void switchHeartListener() {
+    public void heartIndicator() {
+        ImageView heartBlankView = (ImageView) findViewById(R.id.heart_blank);
+        ImageView heartView = (ImageView) findViewById(R.id.heart);
+
+        if (GlobalVariables.inBookMarks(images[pos])) {
+            heartBlankView.setVisibility(View.INVISIBLE);
+            heartView.setVisibility(View.VISIBLE);
+        }
+        else if (!GlobalVariables.inBookMarks(images[pos])) {
+            heartBlankView.setVisibility(View.VISIBLE);
+            heartView.setVisibility(View.INVISIBLE);
+        }
+    }
+
+
+    public void switchHeartListener(int position) {
         View heartView = findViewById(R.id.heart);
         View heartBlankView = findViewById(R.id.heart_blank);
+        heartBlankView.bringToFront();
+        heartView.bringToFront();
         heartView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                switchHeart();
+                switchHeart(position);
             }
         });
         heartBlankView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                switchHeart();
+                switchHeart(position);
             }
         });
     }
 
-    public void switchHeart(){
+    public void switchHeart(int position){
         final ImageView expandedImageView = (ImageView) findViewById(R.id.expanded_image);
         final ImageView heartView = (ImageView) findViewById(R.id.heart);
         final ImageView heartBlankView = (ImageView) findViewById(R.id.heart_blank);
@@ -87,7 +138,7 @@ public class Fragment2Activity extends Activity implements View.OnClickListener 
             heartView.setVisibility(View.INVISIBLE);
 
             //하트 없앨시 즐겨찾기 삭제
-            GlobalVariables.removeBookMarks(imagePosition);
+            GlobalVariables.removeBookMarks(images[position]);
 
             heartBlankView.setVisibility(View.VISIBLE);
         }
@@ -95,7 +146,7 @@ public class Fragment2Activity extends Activity implements View.OnClickListener 
             heartView.setVisibility(View.VISIBLE);
 
             //하트 생길시 즐겨찾기 추가
-            GlobalVariables.addBookMarks(imagePosition);
+            GlobalVariables.addBookMarks(images[position]);
 
             heartBlankView.setVisibility(View.INVISIBLE);
         }
@@ -106,10 +157,19 @@ public class Fragment2Activity extends Activity implements View.OnClickListener 
         final ImageView heartView = (ImageView) findViewById(R.id.heart);
         final ImageView heartBlankView = (ImageView) findViewById(R.id.heart_blank);
 
-        expandedImageView.setImageResource(imagePosition = imageResId);
+//        expandedImageView.setImageResource(images[position] = imageResId);
+        int temp = 0;
+        for (int i = 0; i < images.length; i++) {
+            if (images[i] == imageResId) {
+                temp = i;
+                break;
+            }
+        }
+        pos = temp;
+        viewPager.setCurrentItem(pos);
 
         //즐겨찾기에 있으면 하트 표시, 없으면 반대 표시
-        if (GlobalVariables.inBookMarks(imagePosition)) {
+        if (GlobalVariables.inBookMarks(images[pos])) {
             heartView.setVisibility(View.VISIBLE);
             heartBlankView.setVisibility(View.INVISIBLE);
         }

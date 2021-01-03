@@ -46,7 +46,7 @@ public class Fragment2BookmarksActivity extends Activity implements View.OnClick
         int position = intent.getExtras().getInt("id");
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager_fragment2) ;
-        BookmarksVPAdapter pagerAdapter = new BookmarksVPAdapter(this, position) ;
+        BookmarksVPAdapter pagerAdapter = new BookmarksVPAdapter(this, 1) ;
         viewPager.setAdapter(pagerAdapter) ;
         viewPager.setCurrentItem(position);
 //        viewPager.set
@@ -76,62 +76,62 @@ public class Fragment2BookmarksActivity extends Activity implements View.OnClick
 
     }
 
-    public void switchHeartListener() {
-        View heartView = findViewById(R.id.heart);
-        View heartBlankView = findViewById(R.id.heart_blank);
-        heartView.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                switchHeart();
-            }
-        });
-        heartBlankView.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                switchHeart();
-            }
-        });
-    }
-
-    public void switchHeart(){
-        final ImageView expandedImageView = (ImageView) findViewById(R.id.expanded_image);
-        final ImageView heartView = (ImageView) findViewById(R.id.heart);
-        final ImageView heartBlankView = (ImageView) findViewById(R.id.heart_blank);
-        if (heartView.getVisibility() == View.VISIBLE) {
-            heartView.setVisibility(View.INVISIBLE);
-
-            //하트 없앨시 즐겨찾기 삭제
-            GlobalVariables.removeBookMarks(imagePosition);
-
-            heartBlankView.setVisibility(View.VISIBLE);
-        }
-        else if (heartView.getVisibility() == View.INVISIBLE) {
-            heartView.setVisibility(View.VISIBLE);
-
-            //하트 생길시 즐겨찾기 추가
-            GlobalVariables.addBookMarks(imagePosition);
-
-            heartBlankView.setVisibility(View.INVISIBLE);
-        }
-    }
-
-    private void zoomImageFromThumb(int imageResId) {
-        final ImageView expandedImageView = (ImageView) findViewById(R.id.expanded_image);
-        final ImageView heartView = (ImageView) findViewById(R.id.heart);
-        final ImageView heartBlankView = (ImageView) findViewById(R.id.heart_blank);
-
-        expandedImageView.setImageResource(imagePosition = imageResId);
-
-        //즐겨찾기에 있으면 하트 표시, 없으면 반대 표시
-        if (GlobalVariables.inBookMarks(imagePosition)) {
-            heartView.setVisibility(View.VISIBLE);
-            heartBlankView.setVisibility(View.INVISIBLE);
-        }
-        else {
-            heartView.setVisibility(View.INVISIBLE);
-            heartBlankView.setVisibility(View.VISIBLE);
-        }
-        expandedImageView.setVisibility(View.VISIBLE);
-    }
+//    public void switchHeartListener() {
+//        View heartView = findViewById(R.id.heart);
+//        View heartBlankView = findViewById(R.id.heart_blank);
+//        heartView.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//                switchHeart();
+//            }
+//        });
+//        heartBlankView.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//                switchHeart();
+//            }
+//        });
+//    }
+//
+//    public void switchHeart(){
+//        final ImageView expandedImageView = (ImageView) findViewById(R.id.expanded_image);
+//        final ImageView heartView = (ImageView) findViewById(R.id.heart);
+//        final ImageView heartBlankView = (ImageView) findViewById(R.id.heart_blank);
+//        if (heartView.getVisibility() == View.VISIBLE) {
+//            heartView.setVisibility(View.INVISIBLE);
+//
+//            //하트 없앨시 즐겨찾기 삭제
+//            GlobalVariables.removeBookMarks(imagePosition);
+//
+//            heartBlankView.setVisibility(View.VISIBLE);
+//        }
+//        else if (heartView.getVisibility() == View.INVISIBLE) {
+//            heartView.setVisibility(View.VISIBLE);
+//
+//            //하트 생길시 즐겨찾기 추가
+//            GlobalVariables.addBookMarks(imagePosition);
+//
+//            heartBlankView.setVisibility(View.INVISIBLE);
+//        }
+//    }
+//
+//    private void zoomImageFromThumb(int imageResId) {
+//        final ImageView expandedImageView = (ImageView) findViewById(R.id.expanded_image);
+//        final ImageView heartView = (ImageView) findViewById(R.id.heart);
+//        final ImageView heartBlankView = (ImageView) findViewById(R.id.heart_blank);
+//
+//        expandedImageView.setImageResource(imagePosition = imageResId);
+//
+//        //즐겨찾기에 있으면 하트 표시, 없으면 반대 표시
+//        if (GlobalVariables.inBookMarks(imagePosition)) {
+//            heartView.setVisibility(View.VISIBLE);
+//            heartBlankView.setVisibility(View.INVISIBLE);
+//        }
+//        else {
+//            heartView.setVisibility(View.INVISIBLE);
+//            heartBlankView.setVisibility(View.VISIBLE);
+//        }
+//        expandedImageView.setVisibility(View.VISIBLE);
+//    }
 
 }
