@@ -157,7 +157,7 @@ public class Fragment1 extends Fragment {
      * @return A new instance of fragment Fragment1.
      */
     // TODO: Rename and change types and number of parameters
-            public static Fragment1 newInstance(String param1, String param2) {
+    public static Fragment1 newInstance(String param1, String param2) {
         Fragment1 fragment = new Fragment1();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
@@ -178,7 +178,7 @@ public class Fragment1 extends Fragment {
 
     public int findNum(String text){
         for (int i=0; i<NAME.length ;i++){
-            if (text == NAME[i]){
+            if (text.equals(NAME[i])){
                 return i;
             };
         };
@@ -186,12 +186,12 @@ public class Fragment1 extends Fragment {
     }
 
     public int find_index(String text){
-                for (int i = 0 ; i<adapter.getCount() ;i++){
-                    if (text == adapter.getObjString(i)){
-                        return i;
-                    }
-                }
-                return -1;
+        for (int i = 0 ; i<adapter.getCount() ;i++){
+            if (text == adapter.getObjString(i)){
+                return i;
+            }
+        }
+        return -1;
     }
 
     public int find_index2(String text){
@@ -241,7 +241,7 @@ public class Fragment1 extends Fragment {
 
                 String titleStr = item.getTitle();
                 index3 = findNum(titleStr);
-                index3 = index3 +1;
+                index3 = index3;
 
                 new AlertDialog.Builder(getActivity()) // TestActivity 부분에는 현재 Activity의 이름 입력.
                         .setNeutralButton("delete", new DialogInterface.OnClickListener() {      // 버튼1 (직접 작성)
@@ -262,7 +262,7 @@ public class Fragment1 extends Fragment {
                                     line_num = line_num +1;
                                     try {
                                         if ((str_input = delete_br.readLine()) != null){
-                                            if ((line_num>=(index3*3+1)) && line_num <=(index3*3+4)){
+                                            if ((line_num>=(index3*4+1)) && line_num <=(index3*4+4)){
                                                 dummy += dummy + "\n";
                                             }
                                             else{
@@ -314,13 +314,15 @@ public class Fragment1 extends Fragment {
                                 }
                                 adapter.notifyDataSetChanged();
 
-                                System.out.println(delete_Str);
+                                if (adapterMode == 1){
+                                    adapter2.removeItem(adapter2.GetItemIndex(titleStr));
+                                    adapter2.notifyDataSetChanged();
+                                }
 
-                                //Toast.makeText(getActivity().getApplicationContext(), "확인 누름", Toast.LENGTH_SHORT).show(); // 실행할 코드
+                                Toast.makeText(getActivity().getApplicationContext(), "확인 누름", Toast.LENGTH_SHORT).show(); // 실행할 코드
                             }
                         })
                         .show();
-
 
                 return true;
             }
@@ -383,7 +385,6 @@ public class Fragment1 extends Fragment {
                     }
                     else if (index < 0) { //숫자를 눌렀을 때
                         //titleStr
-
                         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE, Manifest.permission.SEND_SMS, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
                         }

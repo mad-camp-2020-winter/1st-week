@@ -96,10 +96,18 @@ public class ListViewAdapter extends BaseAdapter {
         ListViewItem item = new ListViewItem();
 
         return listViewItemList.get(index).getTitle();
-    }
+}
 
     public void clearAdapter(){
         listViewItemList.removeAll(listViewItemList);
     }
 
+    public int GetItemIndex(String object){
+        for (int i = 0; i<listViewItemList.size(); i++){
+            if (object.equals(listViewItemList.get(i).getTitle())){
+                return i;
+            }
+        }
+        return -1;
+    }
 }
