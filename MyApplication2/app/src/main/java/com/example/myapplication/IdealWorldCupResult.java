@@ -18,11 +18,11 @@ public class IdealWorldCupResult extends Activity {
         ImageView image = findViewById(R.id.result_image);
         image.setImageResource(GlobalVariables.image_pick);
 
-        image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+//        image.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//            }
+//        });
     }
 }
