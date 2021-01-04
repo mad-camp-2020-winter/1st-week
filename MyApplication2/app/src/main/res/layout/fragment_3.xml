@@ -26,18 +26,20 @@
             android:orientation="horizontal"
             >
 
-            <Button
+            <ImageButton
                 android:id="@+id/male_button"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:text="남자 연예인"></Button>
+                android:src = "@drawable/boy"
+                android:scaleType="centerCrop"></ImageButton>
 
 
-            <Button
+            <ImageButton
                 android:id="@+id/female_button"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:text="여자 연예인"></Button>
+                android:src = "@drawable/girl"
+                android:scaleType="centerCrop"></ImageButton>
 
         </LinearLayout>
 
