@@ -62,16 +62,8 @@ public class Tab3Male extends Activity {
             @Override
             public void onClick(View view) {
 
-                //button2.setImageResource(arr_round16[0]);
+                button2.setImageResource(R.drawable.dodbogi);
 
-                /*
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                 */
 
                 //일단 기존의 데이터를 10ms간 유지
 
@@ -135,7 +127,6 @@ public class Tab3Male extends Activity {
                         button1.setImageResource(arr_round4[countRound4 * 2]);
                         button2.setImageResource(arr_round4[countRound4 * 2 + 1]);
                     }
-
                     countRound4 = countRound4 + 1;
                 }
 
@@ -157,9 +148,13 @@ public class Tab3Male extends Activity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //button1.setImageResource(arr_round16[0]);
+                button1.setImageResource(R.drawable.dodbogi);
 
-
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
 
                 //일단 기존의 데이터를 10ms간 유지
