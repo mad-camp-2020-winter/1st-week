@@ -9,6 +9,16 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="33dp"
+        android:text="이상형 월드컵 16강"
+        android:id="@+id/male_round16"
+        android:gravity="center"
+        android:background="@color/cardview_shadow_start_color"
+        android:textColor="@color/black"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="33dp"
         android:text="이상형 월드컵 8강"
         android:id="@+id/male_round8"
         android:gravity="center"
@@ -29,18 +39,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="33dp"
-        android:text="이상형 월드컵 2강"
-        android:id="@+id/male_round2"
-        android:gravity="center"
-        android:background="@color/cardview_shadow_start_color"
-        android:textColor="@color/black"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="33dp"
         android:text="☆☆☆이상형 월드컵 결승전☆☆☆"
-        android:id="@+id/male_round1"
+        android:id="@+id/male_round2"
         android:gravity="center"
         android:background="@color/cardview_shadow_start_color"
         android:textColor="@color/black"
