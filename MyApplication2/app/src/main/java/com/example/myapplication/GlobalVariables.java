@@ -12,6 +12,7 @@ public class GlobalVariables {
     public static ArrayList<Integer> bookMarks = new ArrayList<Integer>();
     public static Integer[] male = {R.drawable.b1,R.drawable.b2,R.drawable.b3,R.drawable.b4,R.drawable.b5,R.drawable.b6,R.drawable.b7,R.drawable.b8,R.drawable.b9,R.drawable.b10,R.drawable.b11,R.drawable.b12,R.drawable.b13,R.drawable.b14,R.drawable.b15,R.drawable.b16};
 
+    public int male_pickes = 0;
 
 
 

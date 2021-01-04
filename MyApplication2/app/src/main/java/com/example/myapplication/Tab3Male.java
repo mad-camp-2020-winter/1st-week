@@ -62,23 +62,28 @@ public class Tab3Male extends Activity {
             @Override
             public void onClick(View view) {
 
-                button2.setImageResource(arr_round16[0]);
+                //button2.setImageResource(arr_round16[0]);
 
+                /*
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
 
+                 */
+
                 //일단 기존의 데이터를 10ms간 유지
 
                 if (countRound16<=8){
                     //선택된 이미지를 다음 항목 리스트에 삽입하기
                     arr_round8[countRound16-1] = arr_round16[(countRound16-1)*2];
-                
+                    System.out.println(countRound16);
                     if (countRound16 ==8){
                         male_round8.setVisibility(View.VISIBLE);
                         male_round16.setVisibility(View.INVISIBLE);
+
+                        System.out.println(arr_round8.length);
                         arr_round8 = GlobalVariables.shuffle(arr_round8);
                         button1.setImageResource(arr_round8[0]);
                         button2.setImageResource(arr_round8[1]);
@@ -94,9 +99,10 @@ public class Tab3Male extends Activity {
                 }
 
                 else if(countRound8<=4){
-                    arr_round4[countRound8-1] = arr_round8[(countRound4-1)*2];
 
-                    if (countRound8 ==8){
+                    arr_round4[countRound8-1] = arr_round8[(countRound8-1)*2];
+
+                    if (countRound8 ==4){
                         male_round4.setVisibility(View.VISIBLE);
                         male_round8.setVisibility(View.INVISIBLE);
                         arr_round4 = GlobalVariables.shuffle(arr_round4);
@@ -113,9 +119,31 @@ public class Tab3Male extends Activity {
                     countRound8 = countRound8 + 1;
                 }
 
+                else if(countRound4<=2){
 
+                    arr_round2[countRound4-1] = arr_round4[(countRound4-1)*2];
 
+                    if (countRound4 ==2){
+                        male_round2.setVisibility(View.VISIBLE);
+                        male_round4.setVisibility(View.INVISIBLE);
+                        arr_round2 = GlobalVariables.shuffle(arr_round2);
+                        button1.setImageResource(arr_round2[0]);
+                        button2.setImageResource(arr_round2[1]);
+                        countRound2 = countRound2 + 1;
+                    }
+                    else {
+                        //다음에 나올 이미지 띄우기
+                        button1.setImageResource(arr_round4[countRound4 * 2]);
+                        button2.setImageResource(arr_round4[countRound4 * 2 + 1]);
+                    }
 
+                    countRound4 = countRound4 + 1;
+                }
+
+                //결승전
+                else if(countRound2<=1){
+
+                }
 
             }
         });
@@ -126,7 +154,10 @@ public class Tab3Male extends Activity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                button1.setImageResource(arr_round16[0]);
+                //button1.setImageResource(arr_round16[0]);
+
+                button1.setImageResource(R.drawable.phone);
+
 
                 try {
                     Thread.sleep(1000);
@@ -134,9 +165,79 @@ public class Tab3Male extends Activity {
                     e.printStackTrace();
                 }
 
+
+
                 //일단 기존의 데이터를 10ms간 유지
 
+                if (countRound16<=8){
+                    //선택된 이미지를 다음 항목 리스트에 삽입하기
+                    arr_round8[countRound16-1] = arr_round16[(countRound16-1)*2+1];
+                    System.out.println(countRound16);
+                    if (countRound16 ==8){
+                        male_round8.setVisibility(View.VISIBLE);
+                        male_round16.setVisibility(View.INVISIBLE);
 
+                        System.out.println(arr_round8.length);
+                        arr_round8 = GlobalVariables.shuffle(arr_round8);
+                        button1.setImageResource(arr_round8[0]);
+                        button2.setImageResource(arr_round8[1]);
+                        countRound8 = countRound8 + 1;
+                    }
+                    else {
+                        //다음에 나올 이미지 띄우기
+                        button1.setImageResource(arr_round16[countRound16 * 2]);
+                        button2.setImageResource(arr_round16[countRound16 * 2 + 1]);
+                    }
+
+                    countRound16 = countRound16 + 1;
+                }
+
+                else if(countRound8<=4){
+
+                    arr_round4[countRound8-1] = arr_round8[(countRound8-1)*2+1];
+
+                    if (countRound8 ==4){
+                        male_round4.setVisibility(View.VISIBLE);
+                        male_round8.setVisibility(View.INVISIBLE);
+                        arr_round4 = GlobalVariables.shuffle(arr_round4);
+                        button1.setImageResource(arr_round4[0]);
+                        button2.setImageResource(arr_round4[1]);
+                        countRound4 = countRound4 + 1;
+                    }
+                    else {
+                        //다음에 나올 이미지 띄우기
+                        button1.setImageResource(arr_round8[countRound8 * 2]);
+                        button2.setImageResource(arr_round8[countRound8 * 2 + 1]);
+                    }
+
+                    countRound8 = countRound8 + 1;
+                }
+
+                else if(countRound4<=2){
+
+                    arr_round2[countRound4-1] = arr_round4[(countRound4-1)*2+1];
+
+                    if (countRound4 ==2){
+                        male_round2.setVisibility(View.VISIBLE);
+                        male_round4.setVisibility(View.INVISIBLE);
+                        arr_round2 = GlobalVariables.shuffle(arr_round2);
+                        button1.setImageResource(arr_round2[0]);
+                        button2.setImageResource(arr_round2[1]);
+                        countRound2 = countRound2 + 1;
+                    }
+                    else {
+                        //다음에 나올 이미지 띄우기
+                        button1.setImageResource(arr_round4[countRound4 * 2]);
+                        button2.setImageResource(arr_round4[countRound4 * 2 + 1]);
+                    }
+
+                    countRound4 = countRound4 + 1;
+                }
+
+                //결승전
+                else if(countRound2<=1){
+
+                }
             }
         });
 
