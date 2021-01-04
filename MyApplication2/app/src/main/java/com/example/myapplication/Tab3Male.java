@@ -78,12 +78,11 @@ public class Tab3Male extends Activity {
                 if (countRound16<=8){
                     //선택된 이미지를 다음 항목 리스트에 삽입하기
                     arr_round8[countRound16-1] = arr_round16[(countRound16-1)*2];
-                    System.out.println(countRound16);
+
                     if (countRound16 ==8){
                         male_round8.setVisibility(View.VISIBLE);
                         male_round16.setVisibility(View.INVISIBLE);
 
-                        System.out.println(arr_round8.length);
                         arr_round8 = GlobalVariables.shuffle(arr_round8);
                         button1.setImageResource(arr_round8[0]);
                         button2.setImageResource(arr_round8[1]);
@@ -142,7 +141,11 @@ public class Tab3Male extends Activity {
 
                 //결승전
                 else if(countRound2<=1){
+                    GlobalVariables.image_pick = arr_round2[0];
 
+                    Intent intent=new Intent(Tab3Male.this,IdealWorldCupResult.class);
+                    startActivity(intent);
+                    finish();
                 }
 
             }
@@ -156,14 +159,6 @@ public class Tab3Male extends Activity {
             public void onClick(View view) {
                 //button1.setImageResource(arr_round16[0]);
 
-                button1.setImageResource(R.drawable.phone);
-
-
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
 
 
 
@@ -172,12 +167,11 @@ public class Tab3Male extends Activity {
                 if (countRound16<=8){
                     //선택된 이미지를 다음 항목 리스트에 삽입하기
                     arr_round8[countRound16-1] = arr_round16[(countRound16-1)*2+1];
-                    System.out.println(countRound16);
+
                     if (countRound16 ==8){
                         male_round8.setVisibility(View.VISIBLE);
                         male_round16.setVisibility(View.INVISIBLE);
 
-                        System.out.println(arr_round8.length);
                         arr_round8 = GlobalVariables.shuffle(arr_round8);
                         button1.setImageResource(arr_round8[0]);
                         button2.setImageResource(arr_round8[1]);
@@ -236,7 +230,10 @@ public class Tab3Male extends Activity {
 
                 //결승전
                 else if(countRound2<=1){
-
+                    GlobalVariables.image_pick = arr_round2[1];
+                    Intent intent=new Intent(Tab3Male.this,IdealWorldCupResult.class);
+                    startActivity(intent);
+                    finish();
                 }
             }
         });
