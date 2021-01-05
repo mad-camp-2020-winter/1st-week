@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import android.provider.Telephony;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
@@ -25,6 +26,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -56,6 +58,7 @@ public class Fragment1 extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static int[] PICTURE;
     private static String[] NAME;
     private static String[] PHONE;
     // TODO: Rename and change types of parameters
@@ -77,31 +80,37 @@ public class Fragment1 extends Fragment {
 
     private String getTxtString() throws IOException {
 
-/*
+        /*
+
+        int picture = R.drawable.human;
+
         BufferedWriter bw = new BufferedWriter(new FileWriter(getActivity().getFilesDir() + "address.txt", false));
 
         //초기 값
         bw.write("[\n" +
                 "  {\n" +
+                "    \"picture\":\""+picture+"\",\n" +
                 "    \"name\":\"♡mom♡\",\n" +
                 "    \"phone\":\"01043741113\"\n" +
                 "  },\n" +
                 "  {\n" +
+                "    \"picture\":\""+picture+"\",\n" +
                 "    \"name\":\"♡dad♡\",\n" +
                 "    \"phone\":\"01032917507\"\n" +
                 "  },\n" +
                 "  {\n" +
+                "    \"picture\":\""+picture+"\",\n" +
                 "    \"name\":\"nahye\",\n" +
                 "    \"phone\":\"01094904447\"\n" +
                 "  },\n" +
                 "  {\n" +
+                "    \"picture\":\""+picture+"\",\n" +
                 "    \"name\":\"♡grandma♡\",\n" +
                 "    \"phone\":\"01034689496\"\n" +
                 "  }\n" +
                 "]" );
 
         bw.close();
-
 
 */
 
@@ -128,13 +137,18 @@ public class Fragment1 extends Fragment {
         try {
             JSONArray jarray = new JSONArray(str);
             len = jarray.length();
+            PICTURE = new int[len];
             NAME = new String[len];
             PHONE = new String[len];
             for (int i=0;i<len;i++){
                 JSONObject jObject = jarray.getJSONObject(i);
+
+                String dum = jObject.getString("picture");
+                int picture = Integer.parseInt(dum);
                 String name = jObject.getString("name");
                 String phone = jObject.getString("phone");
 
+                PICTURE[i] = picture;
                 NAME[i] = name;
                 PHONE[i] = phone;
                 //append("name:"+name+", phone:"+ phone);
@@ -228,7 +242,7 @@ public class Fragment1 extends Fragment {
         }
 
         for (int i =0; i<len; i++) {
-            adapter.addItemLast(ContextCompat.getDrawable(getActivity(), R.drawable.human), NAME[i]);
+            adapter.addItemLast(ContextCompat.getDrawable(getActivity(), PICTURE[i]), NAME[i]);
         }
 
 
@@ -243,6 +257,20 @@ public class Fragment1 extends Fragment {
                 String titleStr = item.getTitle();
                 index3 = findNum(titleStr);
                 index3 = index3;
+
+                PopupMenu popup = new PopupMenu(getActivity(), view);
+
+                popup.getMenuInflater().inflate(R.menu.mainmenu,popup.getMenu());
+
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener(){
+
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        return false;
+                    }
+                });
+
+
 
                 new AlertDialog.Builder(getActivity()) // TestActivity 부분에는 현재 Activity의 이름 입력.
                         .setNeutralButton("delete", new DialogInterface.OnClickListener() {      // 버튼1 (직접 작성)
@@ -263,7 +291,7 @@ public class Fragment1 extends Fragment {
                                     line_num = line_num +1;
                                     try {
                                         if ((str_input = delete_br.readLine()) != null){
-                                            if ((line_num>=(index3*4+1)) && line_num <=(index3*4+4)){
+                                            if ((line_num>=(index3*5+1)) && line_num <=(index3*5+5)){
                                                 dummy += dummy + "\n";
                                             }
                                             else{
@@ -311,7 +339,7 @@ public class Fragment1 extends Fragment {
 
                                 adapter.clearAdapter();
                                 for (int i =0; i<len; i++) {
-                                    adapter.addItemLast(ContextCompat.getDrawable(getActivity(), R.drawable.human), NAME[i]);
+                                    adapter.addItemLast(ContextCompat.getDrawable(getActivity(), PICTURE[i]), NAME[i]);
                                 }
                                 adapter.notifyDataSetChanged();
 
@@ -325,6 +353,7 @@ public class Fragment1 extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent intent=new Intent(getActivity(),Address_revise.class);
+                                intent.putExtra("picture",PICTURE[index3]);
                                 intent.putExtra("index",position);
                                 intent.putExtra("name",titleStr);
                                 intent.putExtra("phone",PHONE[index3]);
@@ -445,7 +474,7 @@ public class Fragment1 extends Fragment {
                     listview.setAdapter(adapter2);
                     for (int i = 0; i < NAME.length; i++) {
                         if (NAME[i].toLowerCase().contains(search_text.toLowerCase()) || PHONE[i].contains(search_text)) {
-                            adapter2.addItemLast(ContextCompat.getDrawable(getActivity(), R.drawable.human), NAME[i]);
+                            adapter2.addItemLast(ContextCompat.getDrawable(getActivity(), PICTURE[i]), NAME[i]);
                             stringInSearchText = stringInSearchText + 1;
                         }
                     }

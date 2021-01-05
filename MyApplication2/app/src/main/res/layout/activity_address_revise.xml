@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ImageView
+    <ImageButton
         android:id="@+id/frag1_human_edit"
         android:layout_width="133dp"
         android:layout_height="120dp"
@@ -12,7 +12,6 @@
         android:layout_centerVertical="true"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:background="@drawable/human"
         android:scaleType="centerCrop" />
 
     <LinearLayout

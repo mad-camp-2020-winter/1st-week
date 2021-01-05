@@ -59,6 +59,7 @@ public class SubActivity extends AppCompatActivity {
 
                 /*
                 {
+                    "phone":"01021321",
                     "name":"min",
                     "phone":"01058368290"
                 },
@@ -97,6 +98,7 @@ public class SubActivity extends AppCompatActivity {
                     bw.write( readStr +
                             "  },\n" +
                             "  {\n" +
+                            "    \"picture\":\""+R.drawable.human+"\",\n" +
                             "    \"name\":\""+Name.getText().toString()+"\",\n" +
                             "    \"phone\":\""+Phone.getText().toString()+"\"\n" +
                             "  }\n" +
@@ -105,7 +107,7 @@ public class SubActivity extends AppCompatActivity {
                 }catch (Exception e){
                     e.printStackTrace();
                 }
-
+               // System.o
 
                 Intent intent=new Intent(SubActivity.this,MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
