@@ -325,6 +325,10 @@ public class Fragment1 extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent intent=new Intent(getActivity(),Address_revise.class);
+                                intent.putExtra("index",position);
+                                intent.putExtra("name",titleStr);
+                                intent.putExtra("phone",PHONE[index3]);
+                                intent.putExtra("index3",index3);
                                 startActivity(intent);
                             }
                         })
