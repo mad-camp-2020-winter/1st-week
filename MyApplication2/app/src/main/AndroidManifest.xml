@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-        <activity android:name=".IdealWorldCupResult"></activity>
+        <activity android:name=".Address_revise"></activity>
+        <activity android:name=".IdealWorldCupResult" />
         <activity android:name=".Tab3Female" />
         <activity android:name=".Tab3Male" />
         <activity android:name=".MainActivity">

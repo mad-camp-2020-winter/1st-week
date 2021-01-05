@@ -14,6 +14,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.provider.Telephony;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -323,7 +324,8 @@ public class Fragment1 extends Fragment {
                         .setPositiveButton("revise", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                
+                                Intent intent=new Intent(getActivity(),Address_revise.class);
+                                startActivity(intent);
                             }
                         })
                         .show();

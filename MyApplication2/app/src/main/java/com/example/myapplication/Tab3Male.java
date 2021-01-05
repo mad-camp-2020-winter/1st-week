@@ -211,6 +211,10 @@ public class Tab3Male extends Activity {
                            arr_round8[countRound16-1] = arr_round16[(countRound16-1)*2+1];
 
                            if (countRound16 ==8){
+                               AlertDialog.Builder builder = new AlertDialog.Builder(Tab3Male.this);
+                               builder.setTitle("남자 이상형 월드컵").setMessage("~8강전~");
+                               AlertDialog alertDialog = builder.create();
+                               alertDialog.show();
                                male_round8.setVisibility(View.VISIBLE);
                                male_round16.setVisibility(View.INVISIBLE);
 
@@ -233,6 +237,10 @@ public class Tab3Male extends Activity {
                            arr_round4[countRound8-1] = arr_round8[(countRound8-1)*2+1];
 
                            if (countRound8 ==4){
+                               AlertDialog.Builder builder = new AlertDialog.Builder(Tab3Male.this);
+                               builder.setTitle("남자 이상형 월드컵").setMessage("~4강전~");
+                               AlertDialog alertDialog = builder.create();
+                               alertDialog.show();
                                male_round4.setVisibility(View.VISIBLE);
                                male_round8.setVisibility(View.INVISIBLE);
                                arr_round4 = GlobalVariables.shuffle(arr_round4);
@@ -254,6 +262,10 @@ public class Tab3Male extends Activity {
                            arr_round2[countRound4-1] = arr_round4[(countRound4-1)*2+1];
 
                            if (countRound4 ==2){
+                               AlertDialog.Builder builder = new AlertDialog.Builder(Tab3Male.this);
+                               builder.setTitle("남자 이상형 월드컵").setMessage("☆☆☆☆결승전☆☆☆☆");
+                               AlertDialog alertDialog = builder.create();
+                               alertDialog.show();
                                male_round2.setVisibility(View.VISIBLE);
                                male_round4.setVisibility(View.INVISIBLE);
                                arr_round2 = GlobalVariables.shuffle(arr_round2);
