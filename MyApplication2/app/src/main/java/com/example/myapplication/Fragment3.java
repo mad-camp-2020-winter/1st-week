@@ -1,15 +1,22 @@
 package com.example.myapplication;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,6 +63,8 @@ public class Fragment3 extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        //남자 여자 사진 크기 맞추기
+
     }
 
     @Override
@@ -65,6 +74,25 @@ public class Fragment3 extends Fragment {
         View view = inflater.inflate(R.layout.fragment_3, null);
 
         ImageButton button1 = view.findViewById(R.id.male_button);
+        ImageButton button2 = view.findViewById(R.id.female_button);
+        TextView text1 = view.findViewById(R.id.male_text);
+        TextView text2 = view.findViewById(R.id.female_text);
+
+        //디스플레이 크기 가져옴
+        DisplayMetrics metrics = new DisplayMetrics();
+        WindowManager windowManager = (WindowManager) getActivity().getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
+        windowManager.getDefaultDisplay().getMetrics(metrics);
+
+        //남자여자 image, text view 크기 디스플레이에 맞게 설정
+        Point winSize = new Point();
+        getActivity().getWindowManager().getDefaultDisplay().getSize(winSize);
+        int width = winSize.x / 2 - 5;
+
+        button1.setLayoutParams(new LinearLayout.LayoutParams(width,width));
+        button2.setLayoutParams(new LinearLayout.LayoutParams(width,width));
+        text1.setLayoutParams(new LinearLayout.LayoutParams(width, 100));
+        text2.setLayoutParams(new LinearLayout.LayoutParams(width, 100));
+
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,7 +101,6 @@ public class Fragment3 extends Fragment {
             }
         });
 
-        ImageButton button2 = view.findViewById(R.id.female_button);
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
