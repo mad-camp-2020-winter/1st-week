@@ -3,16 +3,19 @@ package com.example.myapplication;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.CountDownTimer;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -77,35 +80,123 @@ public class Fragment3 extends Fragment {
         ImageButton button2 = view.findViewById(R.id.female_button);
         TextView text1 = view.findViewById(R.id.male_text);
         TextView text2 = view.findViewById(R.id.female_text);
+        ImageView sunglasses1 = view.findViewById(R.id.sunglasses_1);
 
         //디스플레이 크기 가져옴
         DisplayMetrics metrics = new DisplayMetrics();
         WindowManager windowManager = (WindowManager) getActivity().getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
         windowManager.getDefaultDisplay().getMetrics(metrics);
 
-        //남자여자 image, text view 크기 디스플레이에 맞게 설정
+        //이미지 width, height 디스플레이에 맞게 설정
         Point winSize = new Point();
         getActivity().getWindowManager().getDefaultDisplay().getSize(winSize);
         int width = winSize.x / 2 - 5;
+        int sunglasses_width = winSize.x / 3 - 5;
+        int sunglasses_height = winSize.y / 2;
 
+        //이미지 위치 설정
         button1.setLayoutParams(new LinearLayout.LayoutParams(width,width));
+//        button1.bringToFront();
         button2.setLayoutParams(new LinearLayout.LayoutParams(width,width));
         text1.setLayoutParams(new LinearLayout.LayoutParams(width, 100));
         text2.setLayoutParams(new LinearLayout.LayoutParams(width, 100));
+        sunglasses1.setLayoutParams(new LinearLayout.LayoutParams(sunglasses_width, sunglasses_height - 10));
+
+        //애니메이션 효과 추가
+        Animation mAnim = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.activity_tab3_animation_drop); // 선글라스
+        Animation mAnim2 = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.activity_tab3_animation_scale_male); // 소년 움직이기
+        Animation mAnim5 = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.activity_tab3_animation_scale_female); // 소녀 움직이기
+        Animation mAnim3 = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.activity_tab3_animation_run_right); // 소녀 튀기
+        Animation mAnim4 = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.activity_tab3_animation_run_left); // 소년 튀기
+
+        mAnim.setInterpolator(getActivity().getApplicationContext(),android.R.anim.accelerate_interpolator);
+        mAnim2.setInterpolator(getActivity().getApplicationContext(),android.R.anim.accelerate_interpolator);
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getActivity(),Tab3Male.class);
-                startActivity(intent);
+                //BGM 설정
+                MediaPlayer mediaPlayer = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.thug_life);
+
+                mediaPlayer.start();
+
+                sunglasses1.setVisibility(View.VISIBLE);
+                sunglasses1.setAnimation(mAnim);
+                button1.setAnimation(mAnim2);
+                button2.setAnimation(mAnim3);
+
+                sunglasses1.startAnimation(mAnim);
+                button1.startAnimation(mAnim2);
+                text1.setVisibility(View.INVISIBLE);
+                text2.setVisibility(View.INVISIBLE);
+
+                //Timer 설정후 끝나면 액티비티 실행
+                CountDownTimer countDownTimer = new CountDownTimer(7000,10) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        mediaPlayer.stop();
+                        mediaPlayer.reset();
+
+                        Intent intent = new Intent(getActivity(), Tab3Male.class);
+                        startActivity(intent);
+                        sunglasses1.setVisibility(View.INVISIBLE);
+                        sunglasses1.clearAnimation();
+                        button1.clearAnimation();
+                        button2.clearAnimation();
+                        text1.setVisibility(View.VISIBLE);
+                        text2.setVisibility(View.VISIBLE);
+                    }
+                };
+                countDownTimer.start();
+
             }
         });
 
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getActivity(),Tab3Female.class);
-                startActivity(intent);
+                //BGM 설정
+                MediaPlayer mediaPlayer = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.thug_life);
+
+                mediaPlayer.start();
+
+                sunglasses1.setVisibility(View.VISIBLE);
+                sunglasses1.setAnimation(mAnim);
+                button2.setAnimation(mAnim5);
+                button1.setAnimation(mAnim4);
+
+                sunglasses1.startAnimation(mAnim);
+                button2.startAnimation(mAnim5);
+                text1.setVisibility(View.INVISIBLE);
+                text2.setVisibility(View.INVISIBLE);
+
+                //Timer 설정후 끝나면 액티비티 실행
+                CountDownTimer countDownTimer = new CountDownTimer(7000,10) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        mediaPlayer.stop();
+                        mediaPlayer.reset();
+
+                        Intent intent = new Intent(getActivity(), Tab3Female.class);
+                        startActivity(intent);
+                        sunglasses1.setVisibility(View.INVISIBLE);
+                        sunglasses1.clearAnimation();
+                        button1.clearAnimation();
+                        button2.clearAnimation();
+                        text1.setVisibility(View.VISIBLE);
+                        text2.setVisibility(View.VISIBLE);
+                    }
+                };
+                countDownTimer.start();
+
             }
         });
         return view;
