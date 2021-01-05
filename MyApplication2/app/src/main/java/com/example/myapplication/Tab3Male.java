@@ -15,6 +15,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.tabs.TabLayout;
+
 import org.w3c.dom.Text;
 
 public class Tab3Male extends Activity {
@@ -52,6 +54,11 @@ public class Tab3Male extends Activity {
 
 
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(Tab3Male.this);
+        builder.setTitle("남자 이상형 월드컵").setMessage("~16강전~");
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
         ImageButton button1 = findViewById(R.id.male_first_button);
         ImageButton button2 = findViewById(R.id.male_second_button);
 
@@ -86,6 +93,11 @@ public class Tab3Male extends Activity {
                             arr_round8[countRound16-1] = arr_round16[(countRound16-1)*2];
 
                             if (countRound16 ==8){
+                                AlertDialog.Builder builder = new AlertDialog.Builder(Tab3Male.this);
+                                builder.setTitle("남자 이상형 월드컵").setMessage("~8강전~");
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+
                                 male_round8.setVisibility(View.VISIBLE);
                                 male_round16.setVisibility(View.INVISIBLE);
 
@@ -96,6 +108,7 @@ public class Tab3Male extends Activity {
                             }
                             else {
                                 //다음에 나올 이미지 띄우기
+
                                 button1.setImageResource(arr_round16[countRound16 * 2]);
                                 button2.setImageResource(arr_round16[countRound16 * 2 + 1]);
                             }
@@ -108,6 +121,10 @@ public class Tab3Male extends Activity {
                             arr_round4[countRound8-1] = arr_round8[(countRound8-1)*2];
 
                             if (countRound8 ==4){
+                                AlertDialog.Builder builder = new AlertDialog.Builder(Tab3Male.this);
+                                builder.setTitle("남자 이상형 월드컵").setMessage("~4강전~");
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
                                 male_round4.setVisibility(View.VISIBLE);
                                 male_round8.setVisibility(View.INVISIBLE);
                                 arr_round4 = GlobalVariables.shuffle(arr_round4);
@@ -117,6 +134,7 @@ public class Tab3Male extends Activity {
                             }
                             else {
                                 //다음에 나올 이미지 띄우기
+
                                 button1.setImageResource(arr_round8[countRound8 * 2]);
                                 button2.setImageResource(arr_round8[countRound8 * 2 + 1]);
                             }
@@ -129,6 +147,10 @@ public class Tab3Male extends Activity {
                             arr_round2[countRound4-1] = arr_round4[(countRound4-1)*2];
 
                             if (countRound4 ==2){
+                                AlertDialog.Builder builder = new AlertDialog.Builder(Tab3Male.this);
+                                builder.setTitle("남자 이상형 월드컵").setMessage("☆☆☆☆결승전☆☆☆☆");
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
                                 male_round2.setVisibility(View.VISIBLE);
                                 male_round4.setVisibility(View.INVISIBLE);
                                 arr_round2 = GlobalVariables.shuffle(arr_round2);
@@ -138,6 +160,7 @@ public class Tab3Male extends Activity {
                             }
                             else {
                                 //다음에 나올 이미지 띄우기
+
                                 button1.setImageResource(arr_round4[countRound4 * 2]);
                                 button2.setImageResource(arr_round4[countRound4 * 2 + 1]);
                             }

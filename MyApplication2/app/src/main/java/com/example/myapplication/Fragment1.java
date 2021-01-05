@@ -318,8 +318,12 @@ public class Fragment1 extends Fragment {
                                     adapter2.removeItem(adapter2.GetItemIndex(titleStr));
                                     adapter2.notifyDataSetChanged();
                                 }
-
-                                Toast.makeText(getActivity().getApplicationContext(), "확인 누름", Toast.LENGTH_SHORT).show(); // 실행할 코드
+                            }
+                        })
+                        .setPositiveButton("revise", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                
                             }
                         })
                         .show();
