@@ -68,7 +68,7 @@ public class SubActivity extends AppCompatActivity {
                 //기존 txt 파일 읽어오는 코드
                 BufferedReader br = null;
                 try {
-                    br = new BufferedReader(new FileReader(getFilesDir() + "address.txt"));
+                    br = new BufferedReader(new FileReader(getFilesDir() + "address4.txt"));
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -93,7 +93,7 @@ public class SubActivity extends AppCompatActivity {
 
 
                 try{
-                    BufferedWriter bw = new BufferedWriter(new FileWriter(getFilesDir() + "address.txt", false));
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(getFilesDir() + "address4.txt", false));
 
                     bw.write( readStr +
                             "  },\n" +

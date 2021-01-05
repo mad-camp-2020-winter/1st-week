@@ -80,41 +80,56 @@ public class Fragment1 extends Fragment {
 
     private String getTxtString() throws IOException {
 
-        /*
 
-        int picture = R.drawable.human;
+        int num = 0;
+        BufferedWriter bw2 = new BufferedWriter(new FileWriter(getActivity().getFilesDir() + "dummy.txt", true));
+        bw2.write("1\n");
+        bw2.close();
 
-        BufferedWriter bw = new BufferedWriter(new FileWriter(getActivity().getFilesDir() + "address.txt", false));
+        BufferedReader br2 = new BufferedReader(new FileReader(getActivity().getFilesDir() + "dummy.txt"));
+        String readStr2 = "";
+        String str2 = null;
+        while (((str2 = br2.readLine()) != null)) {
+            readStr2 += str2 + "\n";
+            num ++;
+        }
+        br2.close();
 
-        //초기 값
-        bw.write("[\n" +
-                "  {\n" +
-                "    \"picture\":\""+picture+"\",\n" +
-                "    \"name\":\"♡mom♡\",\n" +
-                "    \"phone\":\"01043741113\"\n" +
-                "  },\n" +
-                "  {\n" +
-                "    \"picture\":\""+picture+"\",\n" +
-                "    \"name\":\"♡dad♡\",\n" +
-                "    \"phone\":\"01032917507\"\n" +
-                "  },\n" +
-                "  {\n" +
-                "    \"picture\":\""+picture+"\",\n" +
-                "    \"name\":\"nahye\",\n" +
-                "    \"phone\":\"01094904447\"\n" +
-                "  },\n" +
-                "  {\n" +
-                "    \"picture\":\""+picture+"\",\n" +
-                "    \"name\":\"♡grandma♡\",\n" +
-                "    \"phone\":\"01034689496\"\n" +
-                "  }\n" +
-                "]" );
+        if (num == 1) {
 
-        bw.close();
+            int picture = R.drawable.human;
 
-*/
+            BufferedWriter bw = new BufferedWriter(new FileWriter(getActivity().getFilesDir() + "address4.txt", false));
 
-        BufferedReader br = new BufferedReader(new FileReader(getActivity().getFilesDir() + "address.txt"));
+            //초기 값
+            bw.write("[\n" +
+                    "  {\n" +
+                    "    \"picture\":\"" + picture + "\",\n" +
+                    "    \"name\":\"♡mom♡\",\n" +
+                    "    \"phone\":\"01043741113\"\n" +
+                    "  },\n" +
+                    "  {\n" +
+                    "    \"picture\":\"" + picture + "\",\n" +
+                    "    \"name\":\"♡dad♡\",\n" +
+                    "    \"phone\":\"01032917507\"\n" +
+                    "  },\n" +
+                    "  {\n" +
+                    "    \"picture\":\"" + picture + "\",\n" +
+                    "    \"name\":\"nahye\",\n" +
+                    "    \"phone\":\"01094904447\"\n" +
+                    "  },\n" +
+                    "  {\n" +
+                    "    \"picture\":\"" + picture + "\",\n" +
+                    "    \"name\":\"♡grandma♡\",\n" +
+                    "    \"phone\":\"01034689496\"\n" +
+                    "  }\n" +
+                    "]");
+
+            bw.close();
+
+        }
+
+        BufferedReader br = new BufferedReader(new FileReader(getActivity().getFilesDir() + "address4.txt"));
         String readStr = "";
         String str = null;
         while (((str = br.readLine()) != null)) {
@@ -122,6 +137,7 @@ public class Fragment1 extends Fragment {
         }
         br.close();
 
+        System.out.println("abc------------");
         return readStr;
     }
 
@@ -279,7 +295,7 @@ public class Fragment1 extends Fragment {
 
                                 BufferedReader delete_br = null;
                                 try {
-                                    delete_br = new BufferedReader(new FileReader(getActivity().getFilesDir() + "address.txt"));
+                                    delete_br = new BufferedReader(new FileReader(getActivity().getFilesDir() + "address4.txt"));
                                 } catch (FileNotFoundException e) {
                                     e.printStackTrace();
                                 }
@@ -313,7 +329,7 @@ public class Fragment1 extends Fragment {
 
                                 BufferedWriter bw = null;
                                 try {
-                                    bw = new BufferedWriter(new FileWriter(getActivity().getFilesDir() + "address.txt", false));
+                                    bw = new BufferedWriter(new FileWriter(getActivity().getFilesDir() + "address4.txt", false));
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }

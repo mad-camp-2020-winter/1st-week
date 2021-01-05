@@ -117,7 +117,7 @@ int picture;
 
                 BufferedReader br = null;
                 try {
-                    br = new BufferedReader(new FileReader(getFilesDir() + "address.txt"));
+                    br = new BufferedReader(new FileReader(getFilesDir() + "address4.txt"));
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -161,7 +161,7 @@ int picture;
 
                 BufferedWriter bw = null;
                 try {
-                    bw = new BufferedWriter(new FileWriter(getFilesDir() + "address.txt", false));
+                    bw = new BufferedWriter(new FileWriter(getFilesDir() + "address4.txt", false));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
